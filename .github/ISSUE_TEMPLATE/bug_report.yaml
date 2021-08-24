@@ -55,7 +55,6 @@ body:
       - andere
   validations:
     required: true
-body:
 - type: input
   id: client-mods
   attributes:
