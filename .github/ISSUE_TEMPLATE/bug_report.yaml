@@ -85,7 +85,7 @@ body:
 - type: dropdown
   id: server-modloader
   attributes:
-    label: Modloader
+    label: Serversoftware
     description: Bitte gebe die auf dem Server installierte Serversoftware an
     options:
       - Vanilla
@@ -96,7 +96,6 @@ body:
       - Purpur
   validations:
     required: true
-body:
 - type: input
   id: server-mods
   attributes:
