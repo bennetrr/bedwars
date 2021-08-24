@@ -1,0 +1,11 @@
+scoreboard players set @s start 0
+scoreboard players enable @s uiAction
+
+# maxPlayerPerTeam <= 1
+execute if score maxPlayerPerTeam data matches ..1 run tellraw @s ["\n\n\n\n\n\n\n\n",{"text":"VanillaBedwars v1.0.0","bold":true,"color":"gold"},"\n",{"text":"by bennetr & halfBloodBuilder","color":"gold"},"\n","\n",{"text":"Neues Spiel starten","color":"gold"},"\n",{"text":"Maximale Anzahl der Spieler pro Team auswählen:","color":"gold"},"\n",{"text":"[-]","color":"gray"}," ",{"score":{"name":"maxPlayerPerTeam","objective":"data"},"color":"gold"}," ",{"text":"[+]","color":"gold","clickEvent":{"action":"run_command","value":"/trigger uiAction set 2"}},"\n","\n",{"text":"[SPIEL STARTEN]","color":"gold","clickEvent":{"action":"run_command","value":"/trigger uiAction set 3"}}]
+
+# 1 < maxPlayerPerTeam < 6
+execute if score maxPlayerPerTeam data matches 2..5 run tellraw @s ["\n\n\n\n\n\n\n\n",{"text":"VanillaBedwars v1.0.0","bold":true,"color":"gold"},"\n",{"text":"by bennetr & halfBloodBuilder","color":"gold"},"\n","\n",{"text":"Neues Spiel starten","color":"gold"},"\n",{"text":"Maximale Anzahl der Spieler pro Team auswählen:","color":"gold"},"\n",{"text":"[-]","color":"gold","clickEvent":{"action":"run_command","value":"/trigger uiAction set 1"}}," ",{"score":{"name":"maxPlayerPerTeam","objective":"data"},"color":"gold"}," ",{"text":"[+]","color":"gold","clickEvent":{"action":"run_command","value":"/trigger uiAction set 2"}},"\n","\n",{"text":"[SPIEL STARTEN]","color":"gold","clickEvent":{"action":"run_command","value":"/trigger uiAction set 3"}}]
+
+# maxPlayerPerTeam >= 6
+execute if score maxPlayerPerTeam data matches 6.. run tellraw @s ["\n\n\n\n\n\n\n\n",{"text":"VanillaBedwars v1.0.0","bold":true,"color":"gold"},"\n",{"text":"by bennetr & halfBloodBuilder","color":"gold"},"\n","\n",{"text":"Neues Spiel starten","color":"gold"},"\n",{"text":"Maximale Anzahl der Spieler pro Team auswählen:","color":"gold"},"\n",{"text":"[-]","color":"gold","clickEvent":{"action":"run_command","value":"/trigger uiAction set 1"}}," ",{"score":{"name":"maxPlayerPerTeam","objective":"data"},"color":"gold"}," ",{"text":"[+]","color":"gray"},"\n","\n",{"text":"[SPIEL STARTEN]","color":"gold","clickEvent":{"action":"run_command","value":"/trigger uiAction set 3"}}]

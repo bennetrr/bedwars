@@ -1,0 +1,2 @@
+execute as @a[x=730,z=-70,dx=-25,dz=-20,y=0,dy=100,team=!teamGray] at @s run effect give @s minecraft:mining_fatigue 2 1 true
+execute if score trapActive teamGray matches 1 run function vanillabedwars:game/traps/team_gray/effects/no_mining_trap
