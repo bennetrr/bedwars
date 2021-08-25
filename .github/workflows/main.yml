@@ -13,7 +13,7 @@ jobs:
       
       - name: Copy files
         run: |
-          mkdir VanillaBedwars
+          mkdir -v VanillaBedwars
           cp -vr data VanillaBedwars/data
           cp -vr datapacks VanillaBedwars/datapacks
           cp -vr entities VanillaBedwars/entities
@@ -24,7 +24,7 @@ jobs:
           cp -vr uid.dat VanillaBedwars/uid.dat
       
       - name: Build
-        run: zip VanillaBedwars.zip VanillaBedwars
+        run: zip -vr VanillaBedwars.zip VanillaBedwars
         
       - name: Upload to release
         uses: actions/upload-release-asset@v1.0.1
