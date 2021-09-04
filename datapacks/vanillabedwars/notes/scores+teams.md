@@ -27,3 +27,5 @@ Team Grau `teamGray`
     - 2: maxPlayerPerTeam +
     - 3: start
     - 4: stop
+    - 5: trainMode on
+    - 6: trainMode off
