@@ -1,6 +1,9 @@
 # Saturation
 effect give @a saturation 2 255 true
 
+# Anti cheating
+recipe take @a *
+
 # Display how long the game runs
 function vanillabedwars:game/timer
 

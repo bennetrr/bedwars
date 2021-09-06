@@ -6,18 +6,17 @@ spawnpoint @a[team=teamRed] 623 45 -80
 #endregion
 
 #region Death management
-execute if score bedDestroyed teamOrange matches 1.. run scoreboard players set @a[team=teamOrange, scores={deaths=1..}] eliminated 1
-execute if score bedDestroyed teamGray matches 1.. run scoreboard players set @a[team=teamOrange, scores={deaths=1..}] eliminated 1
-execute if score bedDestroyed teamGreen matches 1.. run scoreboard players set @a[team=teamOrange, scores={deaths=1..}] eliminated 1
-execute if score bedDestroyed teamRed matches 1.. run scoreboard players set @a[team=teamOrange, scores={deaths=1..}] eliminated 1
+execute unless score trainMode data matches 1.. if score bedDestroyed teamOrange matches 1.. run scoreboard players set @a[team=teamOrange, scores={deaths=1..}] eliminated 1
+execute unless score trainMode data matches 1.. if score bedDestroyed teamGray matches 1.. run scoreboard players set @a[team=teamOrange, scores={deaths=1..}] eliminated 1
+execute unless score trainMode data matches 1.. if score bedDestroyed teamGreen matches 1.. run scoreboard players set @a[team=teamOrange, scores={deaths=1..}] eliminated 1
+execute unless score trainMode data matches 1.. if score bedDestroyed teamRed matches 1.. run scoreboard players set @a[team=teamOrange, scores={deaths=1..}] eliminated 1
 
 execute unless score bedDestroyed teamOrange matches 1.. run scoreboard players set @a[team=teamOrange, scores={deaths=1..}] deaths 0
 execute unless score bedDestroyed teamGray matches 1.. run scoreboard players set @a[team=teamOrange, scores={deaths=1..}] deaths 0
 execute unless score bedDestroyed teamGreen matches 1.. run scoreboard players set @a[team=teamOrange, scores={deaths=1..}] deaths 0
 execute unless score bedDestroyed teamRed matches 1.. run scoreboard players set @a[team=teamOrange, scores={deaths=1..}] deaths 0
 
-execute if score trainMode data matches 1.. run scoreboard players set @a[team=teamOrange, scores={deaths=1..}] eliminated 0
-execute if score trainMode data matches 1.. run scoreboard players set @a[team=teamOrange, scores={deaths=1..}] deaths 0
+execute if score trainMode data matches 1.. run scoreboard players set @a[scores={deaths=1..}] deaths 0
 
 execute as @a[scores={eliminated=1}] run clear @s
 execute as @a[scores={eliminated=1}] run gamemode spectator
