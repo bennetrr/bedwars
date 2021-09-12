@@ -15,6 +15,7 @@ function vanillabedwars:game/deaths
 
 # Special items
 function vanillabedwars:game/items
+function vanillabedwars:game/restore_placing
 
 # Upgrades
 function vanillabedwars:game/upgrades/team_orange
