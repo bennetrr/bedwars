@@ -44,6 +44,7 @@ scoreboard objectives remove uiAction
 scoreboard objectives remove stop
 scoreboard objectives remove start
 scoreboard objectives remove eliminated
+scoreboard objectives remove fireball
 
 scoreboard objectives add start trigger
 scoreboard players enable @a start

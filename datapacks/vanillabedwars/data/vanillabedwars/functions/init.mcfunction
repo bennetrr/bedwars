@@ -5,6 +5,7 @@ scoreboard objectives add timer dummy
 scoreboard objectives add deaths deathCount
 scoreboard objectives add armor dummy
 scoreboard objectives add eliminated dummy
+scoreboard objectives add fireball minecraft.used:minecraft.carrot_on_a_stick
 
 scoreboard players set @a eliminated 0
 

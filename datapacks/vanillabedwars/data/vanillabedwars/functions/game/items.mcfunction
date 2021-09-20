@@ -17,17 +17,13 @@ execute as @a[nbt={Inventory:[{id:"minecraft:diamond_chestplate", tag:{needsRepl
 execute at @e[type=egg] facing entity @p eyes unless entity @a[distance=..2] run fill ^-1 ^ ^ ^-2 ^ ^ cyan_wool replace air
 kill @e[type=chicken]
 
-#region TNT
-#region Block replacement
-# Terracotta
-execute as @e[type=tnt,nbt={Fuse:1s}] at @a run fill ~-1 ~-1 ~-1 ~1 ~1 ~1 air replace orange_terracotta
-execute as @e[type=tnt,nbt={Fuse:1s}] at @a run fill ~-1 ~-1 ~-1 ~1 ~1 ~1 air replace cyan_terracotta
-execute as @e[type=tnt,nbt={Fuse:1s}] at @a run fill ~-1 ~-1 ~-1 ~1 ~1 ~1 air replace red_terracotta
-execute as @e[type=tnt,nbt={Fuse:1s}] at @a run fill ~-1 ~-1 ~-1 ~1 ~1 ~1 air replace green_terracotta
+# Fireballs
+execute at @e[scores={fireball=1..}] run function vanillabedwars:game/fireball
 
-# Wool
-execute as @e[type=tnt,nbt={Fuse:1s}] at @a run fill ~-1 ~-1 ~2 ~1 ~3 ~1 air replace #wool
-#execute as @e[type=tnt,nbt={Fuse:1s}] at @a if blocks ~-1 ~-1 ~-1 ~1 ~1 ~1 air run fill ~-1 ~-1 ~-2 ~1 ~1 ~1 air replace #wool
-#endregion
-
-#endregion
+# TNT and fireballs item deletion
+execute at @e[type=tnt, nbt={Fuse: 1s}] run summon marker ~ ~ ~ {Tags:["deleter"]}
+execute at @e[type=fireball] run summon marker ~ ~ ~ {Tags:["deleter"]}
+tag @e[tag=deleter] add deleter2
+tag @e[tag=deleter] remove deleter
+execute at @e[tag=deleter2] run kill @e[type=item, distance=..10]
+kill @e[tag=deleter2]
