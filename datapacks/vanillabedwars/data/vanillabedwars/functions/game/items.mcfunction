@@ -19,11 +19,14 @@ kill @e[type=chicken]
 
 # Fireballs
 execute at @e[scores={fireball=1..}] run function vanillabedwars:game/fireball
+execute as @e[scores={fireball=1..}] run clear @s carrot_on_a_stick 1
+execute as @e[scores={fireball=1..}] run scoreboard players set @s fireball 0
 
 # TNT and fireballs item deletion
 execute at @e[type=tnt, nbt={Fuse: 1s}] run summon marker ~ ~ ~ {Tags:["deleter"]}
 execute at @e[type=fireball] run summon marker ~ ~ ~ {Tags:["deleter"]}
-tag @e[tag=deleter] add deleter2
-tag @e[tag=deleter] remove deleter
+
 execute at @e[tag=deleter2] run kill @e[type=item, distance=..10]
 kill @e[tag=deleter2]
+tag @e[tag=deleter] add deleter2
+tag @e[tag=deleter] remove deleter
