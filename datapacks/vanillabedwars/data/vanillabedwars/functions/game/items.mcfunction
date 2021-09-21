@@ -21,3 +21,7 @@ kill @e[type=chicken]
 execute at @e[scores={fireball=1..}] run function vanillabedwars:game/fireball
 execute as @e[scores={fireball=1..}] run clear @s carrot_on_a_stick 1
 execute as @e[scores={fireball=1..}] run scoreboard players set @s fireball 0
+
+# Pop up tower
+execute at @e[type=item, nbt={Item: {id: "minecraft:trapped_chest"}, OnGround: 1b}] run clone 4 35 -117 8 42 -121 ~-2 ~ ~-2
+execute as @e[type=item, nbt={Item: {id: "minecraft:trapped_chest"}, OnGround: 1b}] run kill @s
