@@ -25,6 +25,7 @@ public class Commands implements CommandExecutor {
     }
 
     private void startCommand() {
-        plugin.startGame();
+        // TODO: Use values from the command arguments
+        plugin.startGame(1, 1);
     }
 }

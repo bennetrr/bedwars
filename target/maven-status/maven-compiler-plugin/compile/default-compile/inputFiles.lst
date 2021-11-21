@@ -1,6 +1,10 @@
 D:\Minecraft\bedwars\BedwarsPlugin\src\main\java\io\github\bennetrr\bedwarsplugin\BedwarsPlugin.java
+D:\Minecraft\bedwars\BedwarsPlugin\src\main\java\io\github\bennetrr\bedwarsplugin\game_elements\BPMap.java
 D:\Minecraft\bedwars\BedwarsPlugin\src\main\java\io\github\bennetrr\bedwarsplugin\handlers\BlockProtection.java
-D:\Minecraft\bedwars\BedwarsPlugin\src\main\java\io\github\bennetrr\bedwarsplugin\BPGame.java
-D:\Minecraft\bedwars\BedwarsPlugin\src\main\java\io\github\bennetrr\bedwarsplugin\BPTeam.java
+D:\Minecraft\bedwars\BedwarsPlugin\src\main\java\io\github\bennetrr\bedwarsplugin\game_elements\BPTeam.java
+D:\Minecraft\bedwars\BedwarsPlugin\src\main\java\io\github\bennetrr\bedwarsplugin\handlers\Commands.java
+D:\Minecraft\bedwars\BedwarsPlugin\src\main\java\io\github\bennetrr\bedwarsplugin\game_elements\BPGame.java
+D:\Minecraft\bedwars\BedwarsPlugin\src\main\java\io\github\bennetrr\bedwarsplugin\utils\Converters.java
+D:\Minecraft\bedwars\BedwarsPlugin\src\main\java\io\github\bennetrr\bedwarsplugin\game_elements\BPTeamTemplate.java
 D:\Minecraft\bedwars\BedwarsPlugin\src\main\java\io\github\bennetrr\bedwarsplugin\utils\CalculateSpawntimes.java
-D:\Minecraft\bedwars\BedwarsPlugin\src\main\java\io\github\bennetrr\bedwarsplugin\handlers\BPCommandExecutor.java
+D:\Minecraft\bedwars\BedwarsPlugin\src\main\java\io\github\bennetrr\bedwarsplugin\WorldEditStuff.java
