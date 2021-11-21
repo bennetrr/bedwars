@@ -1,0 +1,6 @@
+io\github\bennetrr\bedwarsplugin\BPTeam.class
+io\github\bennetrr\bedwarsplugin\BedwarsPlugin.class
+io\github\bennetrr\bedwarsplugin\BPGame.class
+io\github\bennetrr\bedwarsplugin\utils\CalculateSpawntimes.class
+io\github\bennetrr\bedwarsplugin\handlers\BPCommandExecutor.class
+io\github\bennetrr\bedwarsplugin\handlers\BlockProtection.class

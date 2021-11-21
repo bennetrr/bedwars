@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="d9d6aa9c-57db-4fe9-aa3b-25896ed4c500" name="Raspi4">
+        <fileTransfer rootFolder="/home/pi/mcservers/bedwars" accessType="SFTP" host="ra-b-pi4" port="22" sshConfigId="2d90ea62-82b6-4b8d-bab1-cd1cd488aa51" sshConfig="pi@ra-b-pi4:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

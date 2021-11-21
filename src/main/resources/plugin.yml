@@ -1,0 +1,10 @@
+name: BedwarsPlugin
+version: 0.0.1
+main: io.github.bennetrr.bedwarsplugin.BedwarsPlugin
+api-version: 1.17
+commands:
+  start:
+    description: This command starts a game
+    usage: /start
+    permission: BedwarsPlugin.start
+    permission-message: You don't have <permission>
