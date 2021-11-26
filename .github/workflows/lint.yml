@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
+      - uses: kiancross/checkstyle-annotations-action@v1.0.0
       - name: Java Checkstyle Action
         uses: Justintime50/java-checkstyle-action@v0.3.1
         with:
