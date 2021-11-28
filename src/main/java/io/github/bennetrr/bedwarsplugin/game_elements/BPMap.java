@@ -1,16 +1,9 @@
 package io.github.bennetrr.bedwarsplugin.game_elements;
 
-import org.bukkit.Location;
-
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.world.World;
-import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.MaxChangedBlocksException;
-import com.sk89q.worldedit.WorldEdit;
-import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.math.BlockVector3;
-
 import io.github.bennetrr.bedwarsplugin.utils.Converters;
+import org.bukkit.Location;
 
 public class BPMap {
     private final BPTeamTemplate[] teams;

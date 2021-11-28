@@ -1,10 +1,9 @@
 package io.github.bennetrr.bedwarsplugin.handlers;
 
+import io.github.bennetrr.bedwarsplugin.BedwarsPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-
-import io.github.bennetrr.bedwarsplugin.BedwarsPlugin;
 
 public class Commands implements CommandExecutor {
     private final BedwarsPlugin plugin;

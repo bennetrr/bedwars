@@ -1,17 +1,15 @@
 package io.github.bennetrr.bedwarsplugin;
 
+import com.sk89q.worldedit.EditSession;
+import com.sk89q.worldedit.WorldEdit;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.regions.CuboidRegion;
+import com.sk89q.worldedit.regions.Region;
+import com.sk89q.worldedit.world.World;
+import com.sk89q.worldedit.world.block.BlockState;
+import io.github.bennetrr.bedwarsplugin.utils.Converters;
 import org.bukkit.Location;
 import org.bukkit.Material;
-
-import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.regions.CuboidRegion;
-import com.sk89q.worldedit.world.block.BlockState;
-import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.WorldEdit;
-import com.sk89q.worldedit.world.World;
-import com.sk89q.worldedit.regions.Region;
-
-import io.github.bennetrr.bedwarsplugin.utils.Converters;
 
 public class WorldEditStuff {
     public static void clearMap(Location mapPastePoint, org.bukkit.World w) {

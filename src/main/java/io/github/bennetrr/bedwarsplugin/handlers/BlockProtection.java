@@ -1,7 +1,5 @@
 package io.github.bennetrr.bedwarsplugin.handlers;
 
-import java.util.ArrayList;
-
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -13,6 +11,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+
+import java.util.ArrayList;
 
 public class BlockProtection implements Listener {
     private final ArrayList<Material> allowedBlocks;

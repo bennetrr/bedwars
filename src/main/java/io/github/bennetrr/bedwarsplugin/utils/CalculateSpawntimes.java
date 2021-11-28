@@ -14,7 +14,7 @@ public class CalculateSpawntimes {
     }
 
     public static void main(String[] args) {
-        if(args.length <= 0 || args[1].equalsIgnoreCase("help")) {
+        if (args.length <= 0 || args[1].equalsIgnoreCase("help")) {
             print("This program calculates the spawntimes for some spawners and prints it as markdown table");
             print("Usage: CalculateSpawntimes 0.5 150 200 300");
             print("");
