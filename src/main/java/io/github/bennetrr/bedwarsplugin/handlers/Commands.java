@@ -1,6 +1,8 @@
 package io.github.bennetrr.bedwarsplugin.handlers;
 
 import io.github.bennetrr.bedwarsplugin.BedwarsPlugin;
+import io.github.bennetrr.bedwarsplugin.exceptions.NotEnoughPlayersException;
+import io.github.bennetrr.bedwarsplugin.exceptions.WrongCommandArgumentsException;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,6 +27,10 @@ public class Commands implements CommandExecutor {
 
     private void startCommand() {
         // TODO: Use values from the command arguments
-        plugin.startGame(1, 1);
+        try {
+            plugin.startGame(1, 1);
+        } catch (WrongCommandArgumentsException | NotEnoughPlayersException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -2,6 +2,7 @@ package io.github.bennetrr.bedwarsplugin.game_elements;
 
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 public class BPTeamTemplate {
     protected final NamedTextColor color;
@@ -12,6 +13,7 @@ public class BPTeamTemplate {
     protected final Location upgradeVillagerLoc;
     protected final Location spawnerLoc;
     protected final Location spawnpoint;
+    protected final World world;
 
     public BPTeamTemplate(NamedTextColor color, String name, String fullName, Location bedLoc, Location itemVillagerLoc, Location upgradeVillagerLoc, Location spawnerLoc, Location spawnpoint) {
         this.color = color;
@@ -22,6 +24,7 @@ public class BPTeamTemplate {
         this.upgradeVillagerLoc = upgradeVillagerLoc;
         this.spawnerLoc = spawnerLoc;
         this.spawnpoint = spawnpoint;
+        world = bedLoc.getWorld();
     }
 
     public NamedTextColor getColor() {
@@ -54,5 +57,9 @@ public class BPTeamTemplate {
 
     public Location getSpawnpoint() {
         return spawnpoint;
+    }
+
+    public World getWorld() {
+        return world;
     }
 }

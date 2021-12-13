@@ -4,7 +4,10 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
+import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.scoreboard.Team;
 
 import java.util.List;
@@ -13,6 +16,7 @@ public class BPTeam extends BPTeamTemplate {
     private final Player[] players;
     private final Team team;
     private boolean eliminated = false;
+    private Villager itemVillager, upgradeVillager;
 
     public BPTeam(NamedTextColor color, String name, String fullName, Location bedLoc, Location itemVillagerLoc, Location upgradeVillagerLoc, Location spawnerLoc, Location spawnpoint, Player[] players) {
         super(color, name, fullName, bedLoc, itemVillagerLoc, upgradeVillagerLoc, spawnerLoc, spawnpoint);
@@ -31,15 +35,35 @@ public class BPTeam extends BPTeamTemplate {
         for (Player player : players) {
             team.addEntry(player.getName());
         }
-    }
 
-    public static BPTeam fromTemplate(BPTeamTemplate t, Player[] players) {
-        return new BPTeam(t.getColor(), t.getName(), t.getFullName(), t.getBedLoc(), t.getItemVillagerLoc(), t.getUpgradeVillagerLoc(), t.getSpawnerLoc(), t.getSpawnpoint(), players);
+        // Spawn and prepare the villagers
+        itemVillager = world.spawn(itemVillagerLoc, Villager.class, villager -> {
+            villager.customName(Component.text(this.color + "Items"));
+            villager.setAI(false);
+            villager.setGravity(false);
+            villager.setInvulnerable(true);
+
+            // Add the trades via
+            villager.getRecipes().add(new MerchantRecipe())
+        });
+
+
+        upgradeVillager = world.spawn(upgradeVillagerLoc, Villager.class, villager -> {
+            villager.customName(Component.text(this.color + "Upgrades"));
+            villager.setAI(false);
+            villager.setGravity(false);
+            villager.setInvulnerable(true);
+            villager.
+        });
     }
 
     public static BPTeam fromTemplate(BPTeamTemplate t, List<Player> players) {
         Player[] players1 = players.toArray(new Player[0]);
         return new BPTeam(t.getColor(), t.getName(), t.getFullName(), t.getBedLoc(), t.getItemVillagerLoc(), t.getUpgradeVillagerLoc(), t.getSpawnerLoc(), t.getSpawnpoint(), players1);
+    }
+
+    public void tickActions() {
+
     }
 
     public void close() {

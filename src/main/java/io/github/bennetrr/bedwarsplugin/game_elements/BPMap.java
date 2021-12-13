@@ -1,9 +1,8 @@
 package io.github.bennetrr.bedwarsplugin.game_elements;
 
-import com.sk89q.worldedit.regions.CuboidRegion;
-import com.sk89q.worldedit.world.World;
-import io.github.bennetrr.bedwarsplugin.utils.Converters;
+import io.github.bennetrr.bedwarsplugin.WorldEditStuff;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 public class BPMap {
     private final BPTeamTemplate[] teams;
@@ -11,6 +10,7 @@ public class BPMap {
     private final Location[] emeraldSpawnerLocs;
     private final Location startLoc;
     private final Location endLoc;
+    private final World w;
 
     public BPMap(BPTeamTemplate[] teams, Location[] diamondSpawnerLocs, Location[] emeraldSpawnerLocs, Location startLoc, Location endLoc) {
         this.teams = teams;
@@ -18,6 +18,7 @@ public class BPMap {
         this.emeraldSpawnerLocs = emeraldSpawnerLocs;
         this.startLoc = startLoc;
         this.endLoc = endLoc;
+        w = startLoc.getWorld();
     }
 
     public BPTeamTemplate[] getTeams() {
@@ -40,9 +41,7 @@ public class BPMap {
         return endLoc;
     }
 
-    public void copyMap() {
-        // TODO: Finish
-        CuboidRegion copyRegion = new CuboidRegion((World) startLoc.getWorld(), Converters.location2BlockVector3(startLoc), Converters.location2BlockVector3(endLoc));
-
+    public void copyMap(Location pasteLoc) {
+        WorldEditStuff.copyMap(startLoc, endLoc, pasteLoc);
     }
 }
