@@ -1,11 +1,11 @@
 # Items
 ### Blocks
-- [ ] Wool (4 Iron = 32)
-- [ ] End Stone (4 Gold = 16)
-- [ ] Wooden Planks (24 Iron = 18)
-- [ ] Explosion-proof Glass (10 Iron = 4)
-- [ ] Obsidian (1 Emerald = 2)
-- [ ] Ladders (4 Iron = 16)
+- [X] Wool (4 Iron = 32)
+- [X] End Stone (4 Gold = 16)
+- [X] Wooden Planks (24 Iron = 18)
+- [X] Explosion-proof Glass (10 Iron = 4)
+- [X] Obsidian (1 Emerald = 2)
+- [X] Ladders (4 Iron = 16)
 
 ### Weapons
 - [ ] Iron-, Diamond-Sword (7 Gold, 3 Emeralds)

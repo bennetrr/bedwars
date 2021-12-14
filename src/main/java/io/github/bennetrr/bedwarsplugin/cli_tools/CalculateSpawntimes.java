@@ -1,4 +1,4 @@
-package io.github.bennetrr.bedwarsplugin.utils;
+package io.github.bennetrr.bedwarsplugin.cli_tools;
 
 import java.math.BigDecimal;
 
