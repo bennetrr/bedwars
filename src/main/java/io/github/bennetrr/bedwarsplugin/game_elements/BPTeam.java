@@ -35,18 +35,20 @@ public class BPTeam extends BPTeamTemplate {
             team.addEntry(player.getName());
         }
 
+        VillagerTrades villagerTrades = new VillagerTrades();
+
         // Spawn and prepare the villagers
         itemVillager = world.spawn(itemVillagerLoc, Villager.class, villager -> {
             villager.customName(Component.text(this.color + "Items"));
             VillagerUtils.setDump(villager);
-
-
+            VillagerUtils.addTrades(villager, villagerTrades.getItemTraderTrades());
         });
 
 
         upgradeVillager = world.spawn(upgradeVillagerLoc, Villager.class, villager -> {
             villager.customName(Component.text(this.color + "Upgrades"));
             VillagerUtils.setDump(villager);
+            VillagerUtils.addTrades(villager, villagerTrades.getUpgradeTraderTrades());
         });
     }
 
@@ -77,5 +79,13 @@ public class BPTeam extends BPTeamTemplate {
 
     public void setEliminated(boolean eliminated) {
         this.eliminated = eliminated;
+    }
+
+    public Villager getItemVillager() {
+        return itemVillager;
+    }
+
+    public Villager getUpgradeVillager() {
+        return upgradeVillager;
     }
 }
