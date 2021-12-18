@@ -8,30 +8,30 @@
 - [X] Ladders (4 Iron = 16)
 
 ### Weapons
-- [ ] Iron-, Diamond-Sword (7 Gold, 3 Emeralds)
-- [ ] Iron-, Diamond-Armor (12 Gold, 6 Emeralds)
-- [ ] Shield (20 Iron)
-- [ ] Bow (10 Gold)
-- [ ] Arrows (1 Gold = 8)
+- [X] Iron-, Diamond-Sword (7 Gold, 3 Emeralds)
+- [X] Iron-, Diamond-Armor (12 Gold, 6 Emeralds)
+- [X] Shield (20 Iron)
+- [X] Bow (10 Gold)
+- [X] Arrows (1 Gold = 8)
 
 ### Tools
-- [ ] Shear (10 Iron)
-- [ ] Iron-, Diamond-Pickaxe (5 Gold, 5 Emeralds)
-- [ ] Iron-Axe (6 Gold)
+- [X] Shears (10 Iron)
+- [X] Iron-, Diamond-Pickaxe (5 Gold, 5 Emeralds)
+- [X] Iron-Axe (6 Gold)
 
 ### Potions
-- [ ] Invisibility (1 Emerald)
-- [ ] Speed (1 Emerald)
-- [ ] Jump Boost (1 Emerald)
-- [ ] Splash Instant Heal (1 Emerald)
+- [X] Invisibility (1 Emerald)
+- [X] Speed (1 Emerald)
+- [X] Jump Boost (1 Emerald)
+- [X] Splash Instant Heal (1 Emerald)
 
 ### Miscellaneous
-- [ ] Golden Apple (3 Gold)
-- [ ] Water Bucket (20 Iron)
-- [ ] Lava Bucket (10 Gold)
-- [ ] Fireball (40 Iron)
-- [ ] Enderpearl (7 Emeralds)
-- [ ] TNT (8 Gold)
+- [X] Golden Apple (3 Gold)
+- [X] Water Bucket (20 Iron)
+- [X] Lava Bucket (10 Gold)
+- [X] Fireball (40 Iron)
+- [X] Enderpearl (7 Emeralds)
+- [X] TNT (8 Gold)
 
 # Traps
 - [ ] Alarm Trap
