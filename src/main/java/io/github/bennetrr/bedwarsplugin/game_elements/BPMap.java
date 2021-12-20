@@ -1,6 +1,6 @@
 package io.github.bennetrr.bedwarsplugin.game_elements;
 
-import io.github.bennetrr.bedwarsplugin.WorldEditStuff;
+import io.github.bennetrr.bedwarsplugin.utils.WorldEditStuff;
 import org.bukkit.Location;
 import org.bukkit.World;
 

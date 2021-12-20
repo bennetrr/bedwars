@@ -1,5 +1,6 @@
 package io.github.bennetrr.bedwarsplugin.game_elements;
 
+import io.github.bennetrr.bedwarsplugin.utils.LocationRelativizer;
 import io.github.bennetrr.bedwarsplugin.utils.VillagerUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -16,10 +17,13 @@ public class BPTeam extends BPTeamTemplate {
     private final Team team;
     private boolean eliminated = false;
     private final Villager itemVillager, upgradeVillager;
+    private final LocationRelativizer r;
 
-    public BPTeam(NamedTextColor color, String name, String fullName, Location bedLoc, Location itemVillagerLoc, Location upgradeVillagerLoc, Location spawnerLoc, Location spawnpoint, Player[] players) {
+    public BPTeam(NamedTextColor color, String name, String fullName, Location bedLoc, Location itemVillagerLoc, Location upgradeVillagerLoc, Location spawnerLoc, Location spawnpoint, Player[] players, Location mapStartLoc, Location mapPasteLoc) {
         super(color, name, fullName, bedLoc, itemVillagerLoc, upgradeVillagerLoc, spawnerLoc, spawnpoint);
         this.players = players;
+
+        r = new LocationRelativizer(mapStartLoc, mapPasteLoc);
 
         // Team for display in game
         team = Bukkit.getScoreboardManager().getNewScoreboard().registerNewTeam(this.name);
@@ -35,26 +39,23 @@ public class BPTeam extends BPTeamTemplate {
             team.addEntry(player.getName());
         }
 
-        VillagerTrades villagerTrades = new VillagerTrades();
-
         // Spawn and prepare the villagers
-        itemVillager = world.spawn(itemVillagerLoc, Villager.class, villager -> {
+        itemVillager = world.spawn(r.c(itemVillagerLoc), Villager.class, villager -> {
             villager.customName(Component.text(this.color + "Items"));
             VillagerUtils.setDump(villager);
-            VillagerUtils.addTrades(villager, villagerTrades.getItemTraderTrades());
+            VillagerUtils.addTrades(villager, VillagerTrades.getItemTraderTrades());
         });
 
-
-        upgradeVillager = world.spawn(upgradeVillagerLoc, Villager.class, villager -> {
+        upgradeVillager = world.spawn(r.c(upgradeVillagerLoc), Villager.class, villager -> {
             villager.customName(Component.text(this.color + "Upgrades"));
             VillagerUtils.setDump(villager);
-            VillagerUtils.addTrades(villager, villagerTrades.getUpgradeTraderTrades());
+            VillagerUtils.addTrades(villager, VillagerTrades.getUpgradeTraderTrades());
         });
     }
 
-    public static BPTeam fromTemplate(BPTeamTemplate t, List<Player> players) {
+    public static BPTeam fromTemplate(BPTeamTemplate t, List<Player> players, Location mapStartLoc, Location mapPasteLoc) {
         Player[] players1 = players.toArray(new Player[0]);
-        return new BPTeam(t.getColor(), t.getName(), t.getFullName(), t.getBedLoc(), t.getItemVillagerLoc(), t.getUpgradeVillagerLoc(), t.getSpawnerLoc(), t.getSpawnpoint(), players1);
+        return new BPTeam(t.getColor(), t.getName(), t.getFullName(), t.getBedLoc(), t.getItemVillagerLoc(), t.getUpgradeVillagerLoc(), t.getSpawnerLoc(), t.getSpawnpoint(), players1, mapStartLoc, mapPasteLoc);
     }
 
     public void tickActions() {

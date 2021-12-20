@@ -14,14 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VillagerTrades {
-    // Buy1, Buy2, Sell
-    private final List<ItemStack[]> itemTraderTrades;
-    private final List<ItemStack[]> upgradeTraderTrades;
-
-    public VillagerTrades() {
-        // Items
+    public static List<ItemStack[]> getItemTraderTrades() {
+        List<ItemStack[]> itemTraderTrades = new ArrayList<>();
         // Section Blocks
-        itemTraderTrades = new ArrayList<>();
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 4), new ItemStack(Material.WHITE_WOOL, 32)});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.GOLD_INGOT, 4), new ItemStack(Material.END_STONE, 16)});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 24), new ItemStack(Material.OAK_PLANKS, 18)});
@@ -126,18 +121,13 @@ public class VillagerTrades {
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 10), new ItemStack(Material.FIRE_CHARGE, 1)});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.EMERALD, 7), new ItemStack(Material.ENDER_PEARL, 1)});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.GOLD_INGOT, 8), new ItemStack(Material.TNT, 1)});
-
-        // Upgrades
-        upgradeTraderTrades = new ArrayList<>();
-        // Section Upgrades
-        upgradeTraderTrades.add(new ItemStack[]{new ItemStack(Material.BARRIER, 1), new ItemStack(Material.BARRIER, 1)});
-    }
-
-    public List<ItemStack[]> getItemTraderTrades() {
         return itemTraderTrades;
     }
 
-    public List<ItemStack[]> getUpgradeTraderTrades() {
+    public static List<ItemStack[]> getUpgradeTraderTrades() {
+        List<ItemStack[]> upgradeTraderTrades = new ArrayList<>();
+        // Section Upgrades
+        upgradeTraderTrades.add(new ItemStack[]{new ItemStack(Material.BARRIER, 1), new ItemStack(Material.BARRIER, 1)});
         return upgradeTraderTrades;
     }
 

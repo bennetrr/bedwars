@@ -8,6 +8,7 @@ import io.github.bennetrr.bedwarsplugin.game_elements.BPTeam;
 import io.github.bennetrr.bedwarsplugin.game_elements.BPTeamTemplate;
 import io.github.bennetrr.bedwarsplugin.handlers.BlockProtection;
 import io.github.bennetrr.bedwarsplugin.handlers.Commands;
+import io.github.bennetrr.bedwarsplugin.utils.WorldEditStuff;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -56,8 +57,9 @@ public class BedwarsPlugin extends JavaPlugin {
     }
 
     public void startGame(int maxPlayersPerTeam, int maxTeams) throws WrongCommandArgumentsException, NotEnoughPlayersException {
-        // Clear the old map
+        // Clear the old map and copy the new
         WorldEditStuff.clearMap(mapPasteLoc);
+        map.copyMap(mapPasteLoc);
 
         //# Team creation and assignment
         // Do some validation on the inputs
@@ -90,13 +92,10 @@ public class BedwarsPlugin extends JavaPlugin {
                 players.add(playerList.remove(rand.nextInt(playerList.size())));
             }
 
-            teams.add(BPTeam.fromTemplate(template, players));
+            teams.add(BPTeam.fromTemplate(template, players, map.getStartLoc(), mapPasteLoc));
         }
 
         game = new BPGame(map, teams);
-
-        // Copy the map
-        game.getMap().copyMap(mapPasteLoc);
     }
 
     @Override

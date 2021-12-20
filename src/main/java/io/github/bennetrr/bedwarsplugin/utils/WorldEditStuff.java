@@ -1,4 +1,4 @@
-package io.github.bennetrr.bedwarsplugin;
+package io.github.bennetrr.bedwarsplugin.utils;
 
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
