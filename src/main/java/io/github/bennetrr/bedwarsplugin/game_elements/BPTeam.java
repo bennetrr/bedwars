@@ -5,11 +5,15 @@ import io.github.bennetrr.bedwarsplugin.utils.VillagerUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.scoreboard.Team;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class BPTeam extends BPTeamTemplate {
@@ -35,9 +39,7 @@ public class BPTeam extends BPTeamTemplate {
         team.setCanSeeFriendlyInvisibles(true);
 
         // Add players to the team
-        for (Player player : players) {
-            team.addEntry(player.getName());
-        }
+        Arrays.stream(players).map(HumanEntity::getName).forEach(team::addEntry);
 
         // Spawn and prepare the villagers
         itemVillager = world.spawn(r.c(itemVillagerLoc), Villager.class, villager -> {
@@ -51,6 +53,25 @@ public class BPTeam extends BPTeamTemplate {
             VillagerUtils.setDump(villager);
             VillagerUtils.addTrades(villager, VillagerTrades.getUpgradeTraderTrades());
         });
+
+        // Gamemodes, TP, Inventories
+        for (Player player : players) {
+            // Gamemode
+            player.setGameMode(GameMode.SURVIVAL);
+
+            // TP
+            player.teleport(spawnpoint);
+
+            // Inventories
+            player.getInventory().clear();
+            player.getEnderChest().clear();
+
+            // Effects
+            for(PotionEffect effect : player.getActivePotionEffects())
+            {
+                player.removePotionEffect(effect.getType());
+            }
+        }
     }
 
     public static BPTeam fromTemplate(BPTeamTemplate t, List<Player> players, Location mapStartLoc, Location mapPasteLoc) {

@@ -1,5 +1,6 @@
 package io.github.bennetrr.bedwarsplugin.game_elements;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class BPGame {
@@ -13,6 +14,10 @@ public class BPGame {
 
     public BPGame(BPMap map, List<BPTeam> teams) {
         this(map, teams.toArray(new BPTeam[0]));
+    }
+
+    public void tickActions() {
+        Arrays.stream(teams).forEach(BPTeam::tickActions);
     }
 
     public BPMap getMap() {

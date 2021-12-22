@@ -10,12 +10,18 @@ import io.github.bennetrr.bedwarsplugin.handlers.BlockProtection;
 import io.github.bennetrr.bedwarsplugin.handlers.Commands;
 import io.github.bennetrr.bedwarsplugin.utils.WorldEditStuff;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -23,7 +29,7 @@ import java.util.Random;
 public class BedwarsPlugin extends JavaPlugin {
     private BPMap map;
     private Location spawnLoc, mapPasteLoc;
-    private BPGame game;
+    private BPGame game = null;
     private World w;
 
     @Override
@@ -52,7 +58,22 @@ public class BedwarsPlugin extends JavaPlugin {
         // Event Handlers
         getServer().getPluginManager().registerEvents(new BlockProtection(), this);
 
-        // Commands
+        // Tick schedulers
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            // pre-game Loop
+            if(game == null) {
+                for (Player onlinePlayer : getServer().getOnlinePlayers()) {
+                    onlinePlayer.setGameMode(GameMode.ADVENTURE);
+                    onlinePlayer.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 3, 265, false, false, false));
+                    onlinePlayer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 3, 265, false, false, false));
+                    onlinePlayer.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 3, 265, false, false, false));
+                }
+            } else {
+                game.tickActions();
+            }
+        }, 1L, 1L);
+
+            // Commands
         this.getCommand("start").setExecutor(new Commands(this));
     }
 
@@ -94,6 +115,9 @@ public class BedwarsPlugin extends JavaPlugin {
 
             teams.add(BPTeam.fromTemplate(template, players, map.getStartLoc(), mapPasteLoc));
         }
+
+        Collection<? extends Entity> items = w.getEntitiesByClass(EntityType.DROPPED_ITEM.getEntityClass());
+        items.forEach(Entity::remove);
 
         game = new BPGame(map, teams);
     }
