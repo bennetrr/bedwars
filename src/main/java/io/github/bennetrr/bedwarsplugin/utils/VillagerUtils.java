@@ -25,7 +25,7 @@ public class VillagerUtils {
 
         MerchantRecipe newRecipe = new MerchantRecipe(sellItem, 999999999);
         newRecipe.addIngredient(buyItem1);
-        if(buyItem2 != null) newRecipe.addIngredient(buyItem2);
+        if (buyItem2 != null) newRecipe.addIngredient(buyItem2);
 
         List<MerchantRecipe> newRecipes = new ArrayList<>(oldRecipes);
         newRecipes.add(newRecipe);
@@ -42,11 +42,11 @@ public class VillagerUtils {
 
         for (ItemStack[] itemStacks : itemList) {
             ItemStack buyItem1, buyItem2, sellItem;
-            if(itemStacks.length == 2) {
+            if (itemStacks.length == 2) {
                 buyItem1 = itemStacks[0];
                 buyItem2 = null;
                 sellItem = itemStacks[1];
-            } else if(itemStacks.length == 3) {
+            } else if (itemStacks.length == 3) {
                 buyItem1 = itemStacks[0];
                 buyItem2 = itemStacks[1];
                 sellItem = itemStacks[2];
@@ -54,7 +54,7 @@ public class VillagerUtils {
 
             MerchantRecipe newRecipe = new MerchantRecipe(sellItem, 999999999);
             newRecipe.addIngredient(buyItem1);
-            if(buyItem2 != null) newRecipe.addIngredient(buyItem2);
+            if (buyItem2 != null) newRecipe.addIngredient(buyItem2);
             newRecipes.add(newRecipe);
         }
         villager.setRecipes(newRecipes);

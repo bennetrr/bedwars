@@ -18,6 +18,9 @@ public class LocationRelativizer {
 
         Location newLocation = newReferencePoint.clone();
         newLocation.add(relX, relY, relZ);
+        newLocation.add(.5, 0, .5);
+        newLocation.setYaw(location.getYaw());
+        newLocation.setPitch(location.getPitch());
         return newLocation;
     }
 

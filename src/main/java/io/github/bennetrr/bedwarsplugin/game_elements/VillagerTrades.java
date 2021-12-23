@@ -1,13 +1,11 @@
 package io.github.bennetrr.bedwarsplugin.game_elements;
 
 import io.github.bennetrr.bedwarsplugin.utils.ItemUtils;
-import io.github.bennetrr.bedwarsplugin.utils.VillagerUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;

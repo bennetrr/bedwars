@@ -19,9 +19,9 @@ import java.util.List;
 public class BPTeam extends BPTeamTemplate {
     private final Player[] players;
     private final Team team;
-    private boolean eliminated = false;
     private final Villager itemVillager, upgradeVillager;
     private final LocationRelativizer r;
+    private boolean eliminated = false;
 
     public BPTeam(NamedTextColor color, String name, String fullName, Location bedLoc, Location itemVillagerLoc, Location upgradeVillagerLoc, Location spawnerLoc, Location spawnpoint, Player[] players, Location mapStartLoc, Location mapPasteLoc) {
         super(color, name, fullName, bedLoc, itemVillagerLoc, upgradeVillagerLoc, spawnerLoc, spawnpoint);
@@ -30,10 +30,10 @@ public class BPTeam extends BPTeamTemplate {
         r = new LocationRelativizer(mapStartLoc, mapPasteLoc);
 
         // Team for display in game
-        team = Bukkit.getScoreboardManager().getNewScoreboard().registerNewTeam(this.name);
-        team.color(NamedTextColor.GREEN);
+        team = Bukkit.getScoreboardManager().getMainScoreboard().registerNewTeam(this.name);
+        team.color(color);
         team.displayName(Component.text(this.fullName));
-        team.prefix(Component.text(this.color + "[" + this.fullName + "] "));
+        team.prefix(Component.text("[" + this.fullName + "] "));
 
         // Making invisible teammates have a transparent body
         team.setCanSeeFriendlyInvisibles(true);
@@ -42,14 +42,17 @@ public class BPTeam extends BPTeamTemplate {
         Arrays.stream(players).map(HumanEntity::getName).forEach(team::addEntry);
 
         // Spawn and prepare the villagers
+        players[0].getServer().getLogger().info(r.c(itemVillagerLoc).toString());
+        players[0].getServer().getLogger().info(r.c(upgradeVillagerLoc).toString());
+
         itemVillager = world.spawn(r.c(itemVillagerLoc), Villager.class, villager -> {
-            villager.customName(Component.text(this.color + "Items"));
+            villager.customName(Component.text("Items").color(color));
             VillagerUtils.setDump(villager);
             VillagerUtils.addTrades(villager, VillagerTrades.getItemTraderTrades());
         });
 
         upgradeVillager = world.spawn(r.c(upgradeVillagerLoc), Villager.class, villager -> {
-            villager.customName(Component.text(this.color + "Upgrades"));
+            villager.customName(Component.text("Upgrades").color(color));
             VillagerUtils.setDump(villager);
             VillagerUtils.addTrades(villager, VillagerTrades.getUpgradeTraderTrades());
         });
@@ -60,17 +63,17 @@ public class BPTeam extends BPTeamTemplate {
             player.setGameMode(GameMode.SURVIVAL);
 
             // TP
-            player.teleport(spawnpoint);
+            player.teleport(r.c(spawnpoint));
+
+            // Spawnpoint
+            player.setBedSpawnLocation(spawnpoint);
 
             // Inventories
             player.getInventory().clear();
             player.getEnderChest().clear();
 
             // Effects
-            for(PotionEffect effect : player.getActivePotionEffects())
-            {
-                player.removePotionEffect(effect.getType());
-            }
+            player.getActivePotionEffects().stream().map(PotionEffect::getType).forEach(player::removePotionEffect);
         }
     }
 

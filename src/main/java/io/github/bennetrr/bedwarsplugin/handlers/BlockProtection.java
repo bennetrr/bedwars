@@ -47,7 +47,7 @@ public class BlockProtection implements Listener {
         if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             if (!allowedBlocks.contains(event.getBlock().getType()) && !onlyBreakBlocks.contains(event.getBlock().getType())) {
                 event.setCancelled(true);
-                event.getPlayer().sendMessage(ChatColor.RED + "Du kannst diesen Block nicht abbauen!");
+                event.getPlayer().sendMessage(ChatColor.RED + "You're not allowed to break this block!");
             }
         }
     }
@@ -65,7 +65,7 @@ public class BlockProtection implements Listener {
         if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             if (!allowedBlocks.contains(event.getBlock().getType()) && !onlyPlaceBlocks.contains(event.getBlock().getType())) {
                 event.setCancelled(true);
-                event.getPlayer().sendMessage(ChatColor.RED + "Du kannst diesen Block nicht platzieren!");
+                event.getPlayer().sendMessage(ChatColor.RED + "You're not allowed to place this block!");
             }
         }
     }

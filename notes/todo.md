@@ -27,7 +27,7 @@ This is basically a list of all the features that the datapack had
 - [ ] Display for teams, active traps and upgrades, etc.
 - [ ] Spawn iron, gold, diamonds and emeralds (-> `spawning.md`)
 - [ ] Increase the spawn rate of diamonds and emeralds over time
-- [ ] Block placing and breaking protections
+- [X] Block placing and breaking protections
 - [ ] Crafting protection
 - [ ] Give every player saturation
 - [ ] Check if the bed of a team is destroyed and manage deaths
