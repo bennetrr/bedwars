@@ -89,6 +89,7 @@ public class VillagerTrades {
         }
         // Section Potions
         {
+            // TODO: Potions are all uncraftable Potions
             ItemStack sellItem = new ItemStack(Material.POTION);
             PotionMeta potionMeta = (PotionMeta) sellItem.getItemMeta();
             potionMeta.addCustomEffect(PotionType.INVISIBILITY.getEffectType().createEffect(3600, 1), true);

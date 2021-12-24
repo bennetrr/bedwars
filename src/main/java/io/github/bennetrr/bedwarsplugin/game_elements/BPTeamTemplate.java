@@ -24,7 +24,7 @@ public class BPTeamTemplate {
         this.upgradeVillagerLoc = upgradeVillagerLoc;
         this.spawnerLoc = spawnerLoc;
         this.spawnpoint = spawnpoint;
-        world = bedLoc.getWorld();
+        world = spawnpoint.getWorld();
     }
 
     public NamedTextColor getColor() {

@@ -55,8 +55,8 @@ public class BedwarsPlugin extends JavaPlugin {
         // Maps
         map = new BPMap(new BPTeamTemplate[]{
                 new BPTeamTemplate(NamedTextColor.RED, "teamRed", "Team Nether", new Location(w, -36, 41, 0), new Location(w, -54, 41, 6, -90, 0), new Location(w, -54, 41, -6, -90, 0), new Location(w, 0, 41, 55), new Location(w, -49, 41, 0)),
-                new BPTeamTemplate(NamedTextColor.DARK_GREEN, "teamGreen", "Team Jungle", new Location(w, 0, 41, -39), new Location(w, -4, 41, -47, -90, 0), new Location(w, 4, 41, -47, 90, 0), new Location(w, 0, 41, -54), new Location(w, 0, 41, -47)),
                 new BPTeamTemplate(NamedTextColor.GRAY, "teamGray", "Team Cave", new Location(w, 40, 41, 0), new Location(w, 49, 41, -5, 0, 0), new Location(w, 49, 41, 5, 180, 0), new Location(w, 54, 41, 0), new Location(w, 49, 41, 0)),
+                new BPTeamTemplate(NamedTextColor.DARK_GREEN, "teamGreen", "Team Jungle", new Location(w, 0, 41, -39), new Location(w, -4, 41, -47, -90, 0), new Location(w, 4, 41, -47, 90, 0), new Location(w, 0, 41, -54), new Location(w, 0, 41, -47)),
                 new BPTeamTemplate(NamedTextColor.GOLD, "teamOrange", "Team Desert", new Location(w, 0, 41, 42), new Location(w, -4, 41, 53, -135, 0), new Location(w, 4, 41, 53, 135, 0), new Location(w, 0, 41, 55), new Location(w, 0, 41, 49))},
                 new Location[]{new Location(w, 34, 41, 34), new Location(w, -34, 41, 34), new Location(w, -34, 41, -34), new Location(w, 34, 41, -34)},
                 new Location[]{new Location(w, 2, 47, 0), new Location(w, -2, 47, 0), new Location(w, 0, 41, 0)},
@@ -136,17 +136,13 @@ public class BedwarsPlugin extends JavaPlugin {
             teams.add(BPTeam.fromTemplate(template, players, map.getStartLoc(), mapPasteLoc));
         }
 
-        log("Deleting items");
-        w.getEntitiesByClass(EntityType.DROPPED_ITEM.getEntityClass()).forEach(Entity::remove);
-        w.getEntitiesByClass(EntityType.VILLAGER.getEntityClass()).forEach(Entity::remove);
-
         game = new BPGame(map, teams);
         getServer().broadcast(Component.text("Game started!"));
     }
 
     public void fullReset() {
         // Clear the map
-        // WorldEditStuff.clearMap(mapPasteLoc);
+        WorldEditStuff.clearMap(mapPasteLoc);
 
         // Delete items and other entities
         w.getEntitiesByClass(EntityType.DROPPED_ITEM.getEntityClass()).forEach(Entity::remove);

@@ -7,9 +7,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scoreboard.Team;
 
@@ -42,20 +40,16 @@ public class BPTeam extends BPTeamTemplate {
         Arrays.stream(players).map(HumanEntity::getName).forEach(team::addEntry);
 
         // Spawn and prepare the villagers
-        players[0].getServer().getLogger().info(r.c(itemVillagerLoc).toString());
-        players[0].getServer().getLogger().info(r.c(upgradeVillagerLoc).toString());
+        itemVillager = (Villager) world.spawnEntity(r.c(itemVillagerLoc), EntityType.VILLAGER);
+        itemVillager.customName(Component.text("Items").color(color));
+        VillagerUtils.setDump(itemVillager);
+        VillagerUtils.addTrades(itemVillager, VillagerTrades.getItemTraderTrades());
+        players[0].getServer().getLogger().info(world.toString());
 
-        itemVillager = world.spawn(r.c(itemVillagerLoc), Villager.class, villager -> {
-            villager.customName(Component.text("Items").color(color));
-            VillagerUtils.setDump(villager);
-            VillagerUtils.addTrades(villager, VillagerTrades.getItemTraderTrades());
-        });
-
-        upgradeVillager = world.spawn(r.c(upgradeVillagerLoc), Villager.class, villager -> {
-            villager.customName(Component.text("Upgrades").color(color));
-            VillagerUtils.setDump(villager);
-            VillagerUtils.addTrades(villager, VillagerTrades.getUpgradeTraderTrades());
-        });
+        upgradeVillager = (Villager) world.spawnEntity(r.c(upgradeVillagerLoc), EntityType.VILLAGER);
+        upgradeVillager.customName(Component.text("Upgrades"));
+        VillagerUtils.setDump(upgradeVillager);
+        VillagerUtils.addTrades(upgradeVillager, VillagerTrades.getUpgradeTraderTrades());
 
         // Gamemodes, TP, Inventories
         for (Player player : players) {
