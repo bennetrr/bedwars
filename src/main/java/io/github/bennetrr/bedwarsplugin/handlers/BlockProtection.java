@@ -1,6 +1,7 @@
 package io.github.bennetrr.bedwarsplugin.handlers;
 
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -47,7 +48,7 @@ public class BlockProtection implements Listener {
         if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             if (!allowedBlocks.contains(event.getBlock().getType()) && !onlyBreakBlocks.contains(event.getBlock().getType())) {
                 event.setCancelled(true);
-                event.getPlayer().sendMessage(ChatColor.RED + "You're not allowed to break this block!");
+                event.getPlayer().sendMessage(Component.text("You're not allowed to break this block!").color(NamedTextColor.RED));
             }
         }
     }
@@ -65,7 +66,7 @@ public class BlockProtection implements Listener {
         if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             if (!allowedBlocks.contains(event.getBlock().getType()) && !onlyPlaceBlocks.contains(event.getBlock().getType())) {
                 event.setCancelled(true);
-                event.getPlayer().sendMessage(ChatColor.RED + "You're not allowed to place this block!");
+                event.getPlayer().sendMessage(Component.text("You're not allowed to place this block!").color(NamedTextColor.RED));
             }
         }
     }

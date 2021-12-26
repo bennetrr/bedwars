@@ -18,6 +18,7 @@ public class VillagerTrades {
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 4), new ItemStack(Material.WHITE_WOOL, 32)});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.GOLD_INGOT, 4), new ItemStack(Material.END_STONE, 16)});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 24), new ItemStack(Material.OAK_PLANKS, 18)});
+        // TODO: Possible?
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 10), ItemUtils.itemStackWithName(Material.CYAN_STAINED_GLASS, 4, "Explosion proof glass")});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.EMERALD, 1), new ItemStack(Material.CRYING_OBSIDIAN, 2)});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 4), new ItemStack(Material.LADDER, 16)});
@@ -34,7 +35,7 @@ public class VillagerTrades {
             itemMeta.setUnbreakable(true);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.EMERALD, 3), sellItem});
         }
-        // TODO: OnVillagerTrade?
+        // TODO: Add actions
         {
             ItemStack sellItem = new ItemStack(Material.IRON_CHESTPLATE);
             ItemMeta itemMeta = sellItem.getItemMeta();
@@ -42,6 +43,7 @@ public class VillagerTrades {
             itemMeta.setUnbreakable(true);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.GOLD_INGOT, 12), sellItem});
         }
+        // TODO: Add actions
         {
             ItemStack sellItem = new ItemStack(Material.DIAMOND_CHESTPLATE);
             ItemMeta itemMeta = sellItem.getItemMeta();
@@ -88,8 +90,8 @@ public class VillagerTrades {
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.GOLD_INGOT, 6), sellItem});
         }
         // Section Potions
+        // TODO: Add potion colors and names
         {
-            // TODO: Potions are all uncraftable Potions
             ItemStack sellItem = new ItemStack(Material.POTION);
             PotionMeta potionMeta = (PotionMeta) sellItem.getItemMeta();
             potionMeta.addCustomEffect(PotionType.INVISIBILITY.getEffectType().createEffect(3600, 1), true);
@@ -126,6 +128,7 @@ public class VillagerTrades {
     public static List<ItemStack[]> getUpgradeTraderTrades() {
         List<ItemStack[]> upgradeTraderTrades = new ArrayList<>();
         // Section Upgrades
+        // TODO: Add upgrades and traps
         upgradeTraderTrades.add(new ItemStack[]{new ItemStack(Material.BARRIER, 1), new ItemStack(Material.BARRIER, 1)});
         return upgradeTraderTrades;
     }
