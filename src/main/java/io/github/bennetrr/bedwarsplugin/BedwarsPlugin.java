@@ -16,8 +16,9 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -145,8 +146,8 @@ public class BedwarsPlugin extends JavaPlugin {
         WorldEditStuff.clearMap(mapPasteLoc);
 
         // Delete items and other entities
-        w.getEntitiesByClass(EntityType.DROPPED_ITEM.getEntityClass()).forEach(Entity::remove);
-        w.getEntitiesByClass(EntityType.VILLAGER.getEntityClass()).forEach(Entity::remove);
+        w.getEntitiesByClass(Item.class).forEach(Entity::remove);
+        w.getEntitiesByClass(Villager.class).forEach(Entity::remove);
 
         // Remove teams
         Bukkit.getScoreboardManager().getMainScoreboard().getTeams().forEach(Team::unregister);
