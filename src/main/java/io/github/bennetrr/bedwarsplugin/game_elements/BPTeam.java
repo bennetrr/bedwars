@@ -45,7 +45,7 @@ public class BPTeam extends BPTeamTemplate {
         itemVillager = world.spawn(r.c(itemVillagerLoc), Villager.class, villager -> {
             villager.customName(Component.text("Items").color(color));
             VillagerUtils.setDump(villager);
-            VillagerUtils.addTrades(villager, VillagerTrades.getItemTraderTrades());
+            VillagerUtils.addTrades(villager, VillagerTrades.getItemTraderTrades(color));
         });
 
         upgradeVillager = world.spawn(r.c(upgradeVillagerLoc), Villager.class, villager -> {

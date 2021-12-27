@@ -8,6 +8,7 @@ import io.github.bennetrr.bedwarsplugin.game_elements.BPTeam;
 import io.github.bennetrr.bedwarsplugin.game_elements.BPTeamTemplate;
 import io.github.bennetrr.bedwarsplugin.handlers.BlockProtection;
 import io.github.bennetrr.bedwarsplugin.handlers.Commands;
+import io.github.bennetrr.bedwarsplugin.handlers.FireballShooter;
 import io.github.bennetrr.bedwarsplugin.utils.WorldEditStuff;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -15,10 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+import org.bukkit.entity.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -71,6 +69,7 @@ public class BedwarsPlugin extends JavaPlugin {
 
         // Event Handlers
         getServer().getPluginManager().registerEvents(new BlockProtection(), this);
+        getServer().getPluginManager().registerEvents(new FireballShooter(), this);
 
         // Tick schedulers
         getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {

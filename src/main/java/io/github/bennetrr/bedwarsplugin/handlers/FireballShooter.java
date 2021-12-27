@@ -13,7 +13,7 @@ import org.bukkit.inventory.PlayerInventory;
 public class FireballShooter implements Listener {
     // TODO: Test
     @EventHandler(priority= EventPriority.HIGH)
-    public void onPlayerUse(PlayerInteractEvent event){
+    public void onFireballShoot(PlayerInteractEvent event){
         Player player = event.getPlayer();
         PlayerInventory inventory = player.getInventory();
         ItemStack itemStack = inventory.getItemInMainHand();

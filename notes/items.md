@@ -3,7 +3,6 @@
 - [X] Wool (4 Iron = 32)
 - [X] End Stone (4 Gold = 16)
 - [X] Wooden Planks (24 Iron = 18)
-- [X] Explosion-proof Glass (10 Iron = 4)
 - [X] Obsidian (1 Emerald = 2)
 - [X] Ladders (4 Iron = 16)
 

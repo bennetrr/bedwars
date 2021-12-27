@@ -19,6 +19,7 @@ public class BlockProtection implements Listener {
     private final ArrayList<Material> allowedBlocks;
     private final ArrayList<Material> onlyBreakBlocks;
     private final ArrayList<Material> onlyPlaceBlocks;
+    private final ArrayList<Material> fireballBreakBlocks;
 
     public BlockProtection() {
         allowedBlocks = new ArrayList<>();
@@ -38,8 +39,16 @@ public class BlockProtection implements Listener {
         onlyBreakBlocks = new ArrayList<>();
         onlyBreakBlocks.addAll(Tag.BEDS.getValues());
         onlyBreakBlocks.add(Material.TALL_GRASS);
+        onlyBreakBlocks.add(Material.FIRE);
 
         onlyPlaceBlocks = new ArrayList<>();
+
+        fireballBreakBlocks = new ArrayList<>();
+        fireballBreakBlocks.add(Material.CYAN_WOOL);
+        fireballBreakBlocks.add(Material.ORANGE_WOOL);
+        fireballBreakBlocks.add(Material.GREEN_WOOL);
+        fireballBreakBlocks.add(Material.RED_WOOL);
+        fireballBreakBlocks.add(Material.GRAY_WOOL);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -76,6 +85,14 @@ public class BlockProtection implements Listener {
         if (event.getEntity().getType().equals(EntityType.PRIMED_TNT))
             if (event.blockList().size() > 0) {
                 event.blockList().removeIf(b -> (!allowedBlocks.contains(b.getType()) && !onlyBreakBlocks.contains(b.getType())));
+            }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onFireballExplosion(EntityExplodeEvent event) {
+        if (event.getEntity().getType().equals(EntityType.FIREBALL))
+            if (event.blockList().size() > 0) {
+                event.blockList().removeIf(b -> (!fireballBreakBlocks.contains(b.getType())));
             }
     }
 }

@@ -2,6 +2,7 @@ package io.github.bennetrr.bedwarsplugin.game_elements;
 
 import io.github.bennetrr.bedwarsplugin.utils.ItemUtils;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,14 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VillagerTrades {
-    public static List<ItemStack[]> getItemTraderTrades() {
+    public static List<ItemStack[]> getItemTraderTrades(NamedTextColor color) {
         List<ItemStack[]> itemTraderTrades = new ArrayList<>();
         // Section Blocks
-        itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 4), new ItemStack(Material.WHITE_WOOL, 32)});
+        itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 4), new ItemStack(ItemUtils.coloredWool(color), 32)});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.GOLD_INGOT, 4), new ItemStack(Material.END_STONE, 16)});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 24), new ItemStack(Material.OAK_PLANKS, 18)});
-        // TODO: Possible?
-        itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 10), ItemUtils.itemStackWithName(Material.CYAN_STAINED_GLASS, 4, "Explosion proof glass")});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.EMERALD, 1), new ItemStack(Material.CRYING_OBSIDIAN, 2)});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 4), new ItemStack(Material.LADDER, 16)});
         // Section Weapons
