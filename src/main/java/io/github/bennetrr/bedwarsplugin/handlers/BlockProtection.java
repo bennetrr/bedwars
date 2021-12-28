@@ -53,7 +53,6 @@ public class BlockProtection implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockBreak(BlockBreakEvent event) {
-        // Disallowed Blocks
         if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             if (!allowedBlocks.contains(event.getBlock().getType()) && !onlyBreakBlocks.contains(event.getBlock().getType())) {
                 event.setCancelled(true);
@@ -64,14 +63,6 @@ public class BlockProtection implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockPlace(BlockPlaceEvent event) {
-        // TNT
-        if (event.getBlock().getType().equals(Material.TNT)) {
-            event.getPlayer().getWorld().spawnEntity(event.getBlock().getLocation().add(0.5, 0, 0.5), EntityType.PRIMED_TNT);
-            event.setCancelled(true);
-            return;
-        }
-
-        // Disallowed blocks
         if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             if (!allowedBlocks.contains(event.getBlock().getType()) && !onlyPlaceBlocks.contains(event.getBlock().getType())) {
                 event.setCancelled(true);
@@ -82,17 +73,15 @@ public class BlockProtection implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onTNTExplosion(EntityExplodeEvent event) {
-        if (event.getEntity().getType().equals(EntityType.PRIMED_TNT))
-            if (event.blockList().size() > 0) {
-                event.blockList().removeIf(b -> (!allowedBlocks.contains(b.getType()) && !onlyBreakBlocks.contains(b.getType())));
-            }
+        if (event.getEntity().getType().equals(EntityType.PRIMED_TNT)) if (event.blockList().size() > 0) {
+            event.blockList().removeIf(b -> (!allowedBlocks.contains(b.getType()) && !onlyBreakBlocks.contains(b.getType())));
+        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onFireballExplosion(EntityExplodeEvent event) {
-        if (event.getEntity().getType().equals(EntityType.FIREBALL))
-            if (event.blockList().size() > 0) {
-                event.blockList().removeIf(b -> (!fireballBreakBlocks.contains(b.getType())));
-            }
+        if (event.getEntity().getType().equals(EntityType.FIREBALL)) if (event.blockList().size() > 0) {
+            event.blockList().removeIf(b -> (!fireballBreakBlocks.contains(b.getType())));
+        }
     }
 }

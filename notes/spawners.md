@@ -1,4 +1,5 @@
 # Iron
+
 | Level | Percent  | Speed         | Time between two spawns    |
 |-------|----------|---------------|----------------------------|
 | 0     | 100%     | 0.5 items/s   | 40 ticks/item              |
@@ -8,6 +9,7 @@
 | 4     | 300%     | 1.5 items/s   | 13 ticks/item              |
 
 # Gold
+
 | Level | Percent  | Speed         | Time between two spawns    |
 |-------|----------|---------------|----------------------------|
 | 0     | 100%     | 0,2 items/s   | 100 ticks/item             |
@@ -17,6 +19,7 @@
 | 4     | 300%     | 0,6 items/s   | 33 ticks/item              |
 
 # Diamond
+
 (Every 5 minutes either diamonds or emeralds)
 
 | Level | Percent | Speed        | Time between two spawns |
@@ -27,6 +30,7 @@
 | 3     | 300%    | 0,12 items/s | 167 ticks/item          |
 
 # Emeralds
+
 | Level | Percent | Speed        | Time between two spawns |
 |-------|---------|--------------|-------------------------|
 | 0     | 100%    | 0,03 items/s | 800 ticks/item          |

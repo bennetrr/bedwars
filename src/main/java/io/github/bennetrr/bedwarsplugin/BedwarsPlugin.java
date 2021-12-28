@@ -1,5 +1,6 @@
 package io.github.bennetrr.bedwarsplugin;
 
+import io.github.bennetrr.bedwarsplugin.definitions.Maps;
 import io.github.bennetrr.bedwarsplugin.exceptions.NotEnoughPlayersException;
 import io.github.bennetrr.bedwarsplugin.exceptions.WrongCommandArgumentsException;
 import io.github.bennetrr.bedwarsplugin.game_elements.BPGame;
@@ -8,15 +9,17 @@ import io.github.bennetrr.bedwarsplugin.game_elements.BPTeam;
 import io.github.bennetrr.bedwarsplugin.game_elements.BPTeamTemplate;
 import io.github.bennetrr.bedwarsplugin.handlers.BlockProtection;
 import io.github.bennetrr.bedwarsplugin.handlers.Commands;
-import io.github.bennetrr.bedwarsplugin.handlers.FireballShooter;
+import io.github.bennetrr.bedwarsplugin.handlers.Explosions;
 import io.github.bennetrr.bedwarsplugin.utils.WorldEditStuff;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -52,16 +55,7 @@ public class BedwarsPlugin extends JavaPlugin {
         fullReset();
 
         // Maps
-        map = new BPMap(new BPTeamTemplate[]{
-                new BPTeamTemplate(NamedTextColor.RED, "teamRed", "Team Nether", new Location(w, -36, 41, 0), new Location(w, -54, 41, 6, -90, 0), new Location(w, -54, 41, -6, -90, 0), new Location(w, 0, 41, 55), new Location(w, -49, 41, 0)),
-                new BPTeamTemplate(NamedTextColor.GRAY, "teamGray", "Team Cave", new Location(w, 40, 41, 0), new Location(w, 49, 41, -5, 0, 0), new Location(w, 49, 41, 5, 180, 0), new Location(w, 54, 41, 0), new Location(w, 49, 41, 0)),
-                new BPTeamTemplate(NamedTextColor.DARK_GREEN, "teamGreen", "Team Jungle", new Location(w, 0, 41, -39), new Location(w, -4, 41, -47, -90, 0), new Location(w, 4, 41, -47, 90, 0), new Location(w, 0, 41, -54), new Location(w, 0, 41, -47)),
-                new BPTeamTemplate(NamedTextColor.GOLD, "teamOrange", "Team Desert", new Location(w, 0, 41, 42), new Location(w, -4, 41, 53, -135, 0), new Location(w, 4, 41, 53, 135, 0), new Location(w, 0, 41, 55), new Location(w, 0, 41, 49))},
-                new Location[]{new Location(w, 34, 41, 34), new Location(w, -34, 41, 34), new Location(w, -34, 41, -34), new Location(w, 34, 41, -34)},
-                new Location[]{new Location(w, 2, 47, 0), new Location(w, -2, 47, 0), new Location(w, 0, 41, 0)},
-                new Location(w, -80, 32, -80),
-                new Location(w, 79, 74, 79)
-        );
+        map = Maps.getMap(w, mapPasteLoc);
 
         // Spawn point
         getServer().setSpawnRadius(0);
@@ -69,20 +63,23 @@ public class BedwarsPlugin extends JavaPlugin {
 
         // Event Handlers
         getServer().getPluginManager().registerEvents(new BlockProtection(), this);
-        getServer().getPluginManager().registerEvents(new FireballShooter(), this);
+        getServer().getPluginManager().registerEvents(new Explosions(), this);
 
         // Tick schedulers
         getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
             // pre-game Loop
             if (game == null) {
-                for (Player onlinePlayer : getServer().getOnlinePlayers()) {
-                    onlinePlayer.setGameMode(GameMode.ADVENTURE);
-                    onlinePlayer.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 3, 265, false, false, false));
-                    onlinePlayer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 3, 265, false, false, false));
-                    onlinePlayer.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 3, 265, false, false, false));
+                for (Player player : getServer().getOnlinePlayers()) {
+                    player.setGameMode(GameMode.ADVENTURE);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 3, 265, false, false, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 3, 265, false, false, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 3, 265, false, false, false));
                 }
             } else {
-                game.tickActions();
+                game.tickActions(getServer());
+                for (Player player : getServer().getOnlinePlayers()) {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 3, 265, false, false, false));
+                }
             }
         }, 1L, 1L);
 
@@ -122,7 +119,7 @@ public class BedwarsPlugin extends JavaPlugin {
         List<BPTeam> teams = new ArrayList<>();
 
         for (int i = 0; i < maxTeams; i++) {
-            BPTeamTemplate template = map.getTeams()[i];
+            BPTeamTemplate template = map.getTeams().get(i);
             List<Player> players = new ArrayList<>();
 
             for (int j = 0; j < maxPlayersPerTeam; j++) {
@@ -135,12 +132,20 @@ public class BedwarsPlugin extends JavaPlugin {
 
             teams.add(BPTeam.fromTemplate(template, players, map.getStartLoc(), mapPasteLoc));
         }
+        // TODO: Do something with the players who are not in a team
 
         game = new BPGame(map, teams);
         getServer().broadcast(Component.text("Game started!"));
     }
 
     public void fullReset() {
+        // TP
+        for (Player player : getServer().getOnlinePlayers()) {
+            player.teleport(spawnLoc);
+            player.getInventory().clear();
+            player.getEnderChest().clear();
+        }
+
         // Clear the map
         WorldEditStuff.clearMap(mapPasteLoc);
 

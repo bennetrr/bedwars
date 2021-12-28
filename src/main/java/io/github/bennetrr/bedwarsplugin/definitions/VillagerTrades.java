@@ -1,4 +1,4 @@
-package io.github.bennetrr.bedwarsplugin.game_elements;
+package io.github.bennetrr.bedwarsplugin.definitions;
 
 import io.github.bennetrr.bedwarsplugin.utils.ItemUtils;
 import net.kyori.adventure.text.Component;
@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
@@ -26,12 +27,14 @@ public class VillagerTrades {
             ItemStack sellItem = new ItemStack(Material.IRON_SWORD);
             ItemMeta itemMeta = sellItem.getItemMeta();
             itemMeta.setUnbreakable(true);
+            sellItem.setItemMeta(itemMeta);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.GOLD_INGOT, 7), sellItem});
         }
         {
             ItemStack sellItem = new ItemStack(Material.DIAMOND_SWORD);
             ItemMeta itemMeta = sellItem.getItemMeta();
             itemMeta.setUnbreakable(true);
+            sellItem.setItemMeta(itemMeta);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.EMERALD, 3), sellItem});
         }
         // TODO: Add actions
@@ -40,6 +43,7 @@ public class VillagerTrades {
             ItemMeta itemMeta = sellItem.getItemMeta();
             itemMeta.displayName(Component.text("Permanent Iron Armor"));
             itemMeta.setUnbreakable(true);
+            sellItem.setItemMeta(itemMeta);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.GOLD_INGOT, 12), sellItem});
         }
         // TODO: Add actions
@@ -48,18 +52,21 @@ public class VillagerTrades {
             ItemMeta itemMeta = sellItem.getItemMeta();
             itemMeta.displayName(Component.text("Permanent Diamond Armor"));
             itemMeta.setUnbreakable(true);
+            sellItem.setItemMeta(itemMeta);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.EMERALD, 6), sellItem});
         }
         {
             ItemStack sellItem = new ItemStack(Material.SHIELD);
             ItemMeta itemMeta = sellItem.getItemMeta();
             itemMeta.setUnbreakable(true);
+            sellItem.setItemMeta(itemMeta);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 20), sellItem});
         }
         {
             ItemStack sellItem = new ItemStack(Material.BOW);
             ItemMeta itemMeta = sellItem.getItemMeta();
             itemMeta.setUnbreakable(true);
+            sellItem.setItemMeta(itemMeta);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.GOLD_INGOT, 10), sellItem});
         }
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.GOLD_INGOT, 1), new ItemStack(Material.ARROW, 8)});
@@ -68,50 +75,57 @@ public class VillagerTrades {
             ItemStack sellItem = new ItemStack(Material.SHEARS);
             ItemMeta itemMeta = sellItem.getItemMeta();
             itemMeta.setUnbreakable(true);
+            sellItem.setItemMeta(itemMeta);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 10), sellItem});
         }
         {
             ItemStack sellItem = new ItemStack(Material.IRON_PICKAXE);
             ItemMeta itemMeta = sellItem.getItemMeta();
             itemMeta.setUnbreakable(true);
+            sellItem.setItemMeta(itemMeta);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.GOLD_INGOT, 5), sellItem});
         }
         {
             ItemStack sellItem = new ItemStack(Material.DIAMOND_PICKAXE);
             ItemMeta itemMeta = sellItem.getItemMeta();
             itemMeta.setUnbreakable(true);
+            sellItem.setItemMeta(itemMeta);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.EMERALD, 5), sellItem});
         }
         {
             ItemStack sellItem = new ItemStack(Material.IRON_AXE);
             ItemMeta itemMeta = sellItem.getItemMeta();
             itemMeta.setUnbreakable(true);
+            sellItem.setItemMeta(itemMeta);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.GOLD_INGOT, 6), sellItem});
         }
         // Section Potions
-        // TODO: Add potion colors and names
         {
             ItemStack sellItem = new ItemStack(Material.POTION);
             PotionMeta potionMeta = (PotionMeta) sellItem.getItemMeta();
-            potionMeta.addCustomEffect(PotionType.INVISIBILITY.getEffectType().createEffect(3600, 1), true);
+            potionMeta.setBasePotionData(new PotionData(PotionType.INVISIBILITY, false, false));
+            sellItem.setItemMeta(potionMeta);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.EMERALD, 1), sellItem});
         }
         {
             ItemStack sellItem = new ItemStack(Material.POTION);
             PotionMeta potionMeta = (PotionMeta) sellItem.getItemMeta();
-            potionMeta.addCustomEffect(PotionType.SPEED.getEffectType().createEffect(1800, 2), true);
+            potionMeta.setBasePotionData(new PotionData(PotionType.SPEED, false, true));
+            sellItem.setItemMeta(potionMeta);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.EMERALD, 1), sellItem});
         }
         {
             ItemStack sellItem = new ItemStack(Material.POTION);
             PotionMeta potionMeta = (PotionMeta) sellItem.getItemMeta();
-            potionMeta.addCustomEffect(PotionType.JUMP.getEffectType().createEffect(1800, 2), true);
+            potionMeta.setBasePotionData(new PotionData(PotionType.JUMP, false, true));
+            sellItem.setItemMeta(potionMeta);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.EMERALD, 1), sellItem});
         }
         {
             ItemStack sellItem = new ItemStack(Material.SPLASH_POTION);
             PotionMeta potionMeta = (PotionMeta) sellItem.getItemMeta();
-            potionMeta.addCustomEffect(PotionType.INSTANT_HEAL.getEffectType().createEffect(1, 2), true);
+            potionMeta.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, true));
+            sellItem.setItemMeta(potionMeta);
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.EMERALD, 1), sellItem});
         }
         // Section Miscellaneous

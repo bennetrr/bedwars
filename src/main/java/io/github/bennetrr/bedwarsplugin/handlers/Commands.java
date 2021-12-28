@@ -19,14 +19,12 @@ public class Commands implements CommandExecutor {
             case "start":
                 startCommand();
                 return true;
-
             default:
                 return false;
         }
     }
 
     private void startCommand() {
-        // TODO: Use values from the command arguments
         try {
             plugin.startGame(1, 1);
         } catch (WrongCommandArgumentsException | NotEnoughPlayersException e) {
