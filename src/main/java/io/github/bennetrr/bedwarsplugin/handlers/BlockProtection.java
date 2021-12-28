@@ -23,7 +23,6 @@ public class BlockProtection implements Listener {
 
     public BlockProtection() {
         allowedBlocks = new ArrayList<>();
-        allowedBlocks.add(Material.CYAN_WOOL);
         allowedBlocks.add(Material.ORANGE_WOOL);
         allowedBlocks.add(Material.GREEN_WOOL);
         allowedBlocks.add(Material.RED_WOOL);
@@ -44,7 +43,6 @@ public class BlockProtection implements Listener {
         onlyPlaceBlocks = new ArrayList<>();
 
         fireballBreakBlocks = new ArrayList<>();
-        fireballBreakBlocks.add(Material.CYAN_WOOL);
         fireballBreakBlocks.add(Material.ORANGE_WOOL);
         fireballBreakBlocks.add(Material.GREEN_WOOL);
         fireballBreakBlocks.add(Material.RED_WOOL);
