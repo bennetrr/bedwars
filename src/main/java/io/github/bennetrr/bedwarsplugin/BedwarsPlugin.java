@@ -9,6 +9,7 @@ import io.github.bennetrr.bedwarsplugin.game_elements.BPTeam;
 import io.github.bennetrr.bedwarsplugin.game_elements.BPTeamTemplate;
 import io.github.bennetrr.bedwarsplugin.handlers.BlockProtection;
 import io.github.bennetrr.bedwarsplugin.handlers.Commands;
+import io.github.bennetrr.bedwarsplugin.handlers.CraftingProtection;
 import io.github.bennetrr.bedwarsplugin.handlers.Explosions;
 import io.github.bennetrr.bedwarsplugin.utils.WorldEditStuff;
 import net.kyori.adventure.text.Component;
@@ -64,13 +65,13 @@ public class BedwarsPlugin extends JavaPlugin {
         // Event Handlers
         getServer().getPluginManager().registerEvents(new BlockProtection(), this);
         getServer().getPluginManager().registerEvents(new Explosions(), this);
+        getServer().getPluginManager().registerEvents(new CraftingProtection(), this);
 
         // Tick schedulers
         getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
             // pre-game Loop
             if (game == null) {
                 for (Player player : getServer().getOnlinePlayers()) {
-                    player.setGameMode(GameMode.ADVENTURE);
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 3, 265, false, false, false));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 3, 265, false, false, false));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 3, 265, false, false, false));
@@ -144,6 +145,7 @@ public class BedwarsPlugin extends JavaPlugin {
             player.teleport(spawnLoc);
             player.getInventory().clear();
             player.getEnderChest().clear();
+            player.setBedSpawnLocation(null);
         }
 
         // Clear the map
