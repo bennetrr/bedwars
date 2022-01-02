@@ -14,7 +14,6 @@ import io.github.bennetrr.bedwarsplugin.handlers.Explosions;
 import io.github.bennetrr.bedwarsplugin.utils.WorldEditStuff;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -53,7 +52,7 @@ public class BedwarsPlugin extends JavaPlugin {
         mapPasteLoc = new Location(w, 608, 50, -144);
 
         //DEBUG
-        fullReset();
+        fullReset(true);
 
         // Maps
         map = Maps.getMap(w, mapPasteLoc);
@@ -97,7 +96,7 @@ public class BedwarsPlugin extends JavaPlugin {
         log("Clear and copy the map");
         // Clear the old map and copy the new
         WorldEditStuff.clearMap(mapPasteLoc);
-        map.copyMap(mapPasteLoc);
+        map.copyMap();
 
         //# Team creation and assignment
         // Do some validation on the inputs
@@ -139,7 +138,7 @@ public class BedwarsPlugin extends JavaPlugin {
         getServer().broadcast(Component.text("Game started!"));
     }
 
-    public void fullReset() {
+    public void fullReset(boolean clearMap) {
         // TP
         for (Player player : getServer().getOnlinePlayers()) {
             player.teleport(spawnLoc);
@@ -149,7 +148,7 @@ public class BedwarsPlugin extends JavaPlugin {
         }
 
         // Clear the map
-        WorldEditStuff.clearMap(mapPasteLoc);
+        if (clearMap) WorldEditStuff.clearMap(mapPasteLoc);
 
         // Delete items and other entities
         w.getEntitiesByClass(Item.class).forEach(Entity::remove);

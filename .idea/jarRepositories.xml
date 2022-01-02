@@ -2,6 +2,11 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
+      <option name="id" value="S01 Sonatype Snapshots" />
+      <option name="name" value="S01 Sonatype Snapshots" />
+      <option name="url" value="https://s01.oss.sonatype.org/content/repositories/snapshots/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="IntellectualSites Releases" />
       <option name="name" value="IntellectualSites Releases" />
       <option name="url" value="https://mvn.intellectualsites.com/content/repositories/releases/" />

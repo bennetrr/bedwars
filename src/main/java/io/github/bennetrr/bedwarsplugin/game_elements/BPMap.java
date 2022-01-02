@@ -57,7 +57,7 @@ public class BPMap {
         }
     }
 
-    public void copyMap(Location pasteLoc) {
+    public void copyMap() {
         WorldEditStuff.copyMap(startLoc, endLoc, pasteLoc);
     }
 

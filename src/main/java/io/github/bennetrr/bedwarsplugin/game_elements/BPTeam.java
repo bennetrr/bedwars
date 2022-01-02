@@ -23,13 +23,12 @@ public class BPTeam extends BPTeamTemplate {
     private final List<Player> players;
     private final Team team;
     private final Villager itemVillager, upgradeVillager;
-    private boolean eliminated = false;
     private final LocationRelativizer r;
-
+    private final int ironTimerMax;
+    private final int goldTimerMax;
+    private boolean eliminated = false;
     private int ironTimer;
-    private int ironTimerMax;
     private int goldTimer;
-    private int goldTimerMax;
 
     public BPTeam(NamedTextColor color, String name, String fullName, Location bedLoc, Location itemVillagerLoc, Location upgradeVillagerLoc, Location spawnerLoc, Location spawnpoint, List<Player> players, Location mapStartLoc, Location mapPasteLoc) {
         super(color, name, fullName, bedLoc, itemVillagerLoc, upgradeVillagerLoc, spawnerLoc, spawnpoint);
@@ -67,9 +66,9 @@ public class BPTeam extends BPTeamTemplate {
             VillagerUtils.addTrades(villager, VillagerTrades.getUpgradeTraderTrades());
         });
 
-        // Gamemodes, TP, Inventories
+        // Game modes, TP, Inventories
         for (Player player : players) {
-            // Gamemode
+            // Game modes
             player.setGameMode(GameMode.SURVIVAL);
 
             // TP

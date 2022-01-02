@@ -11,12 +11,7 @@
     - `/bedwars config` for a config gui
     - `/bedwars config ...` for configuration with the command line
 - [ ] New team assignment system
-    - 1 - 6 players per team
-    - 1 - 4 teams
-    - Set the priority to
-        - create all given teams, but some teams have fewer players and some unassigned players
-        - create all given teams, but some teams have fewer / more players
-        - (maybe some more)
+  - Set the player count for each team in the GUI or with the command
 
 # Fixes
 

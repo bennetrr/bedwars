@@ -13,12 +13,13 @@ import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
 import com.sk89q.worldedit.world.block.BlockState;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
 public class WorldEditStuff {
     public static BlockVector3 location2BlockVector3(Location loc) {
-        return BlockVector3.at(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+        return BukkitAdapter.adapt(loc).toVector().toBlockPoint();
     }
 
 
@@ -45,21 +46,28 @@ public class WorldEditStuff {
         }
     }
 
-    public static void copyMap(Location mapStartLoc, Location mapEndLoc, Location mapPasteLoc) {
-        World world = BukkitAdapter.adapt(mapStartLoc.getWorld());
+    public static void copyMap(Location startLoc, Location endLoc, Location pasteLoc) {
+        Bukkit.getLogger().info("[Bedwars / WorldEditStuff] StartLoc: " + startLoc + "    EndLoc: " + endLoc + "    PasteLoc: " + pasteLoc);
+        World world = BukkitAdapter.adapt(startLoc.getWorld());
+
+        Bukkit.getLogger().info("[Bedwars / WorldEditStuff] StartLoc: " + location2BlockVector3(startLoc) + "    EndLoc: " + location2BlockVector3(endLoc) + "    PasteLoc: " + location2BlockVector3(pasteLoc));
 
         // Select the region to copy
-        CuboidRegion copyRegion = new CuboidRegion(world, location2BlockVector3(mapStartLoc), location2BlockVector3(mapEndLoc));
+        CuboidRegion copyRegion = new CuboidRegion(world, location2BlockVector3(startLoc), location2BlockVector3(endLoc));
         BlockArrayClipboard clipboard = new BlockArrayClipboard(copyRegion);
 
-        // This EditSession will be closed after the copy and paste command is finished
+
+        // This EditSessions will be closed after the copy and paste command is finished
+        // Copy
         try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
-            // Copy
             ForwardExtentCopy copyOperation = new ForwardExtentCopy(editSession, copyRegion, clipboard, copyRegion.getMinimumPoint());
             Operations.complete(copyOperation);
+        }
 
-            // Paste
-            Operation pasteOperation = new ClipboardHolder(clipboard).createPaste(editSession).to(location2BlockVector3(mapPasteLoc)).build();
+        // Paste
+        try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
+            Operation pasteOperation = new ClipboardHolder(clipboard).createPaste(editSession).to(location2BlockVector3(pasteLoc)).build();
+            Bukkit.getLogger().info(("[Bedwars / WorldEditStuff] " + ((ForwardExtentCopy) pasteOperation).toString()));
             Operations.complete(pasteOperation);
         }
     }
