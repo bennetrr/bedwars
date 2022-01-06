@@ -1,7 +1,11 @@
 package io.github.bennetrr.bedwarsplugin.utils;
 
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.Nullable;
 
 public class ItemUtils {
     public static Material coloredWool(NamedTextColor color) {
@@ -38,5 +42,22 @@ public class ItemUtils {
         if (color == NamedTextColor.DARK_GRAY) return Material.GRAY_BED;
         if (color == NamedTextColor.BLACK) return Material.BLACK_BED;
         return Material.WHITE_BED;
+    }
+
+    public static ItemStack getUnbreakableItem(Material material, int count) {
+        ItemStack itemStack = new ItemStack(material, count);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setUnbreakable(true);
+        itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+
+    @Nullable
+    public static String getDisplayName(ItemStack itemStack) {
+        if (itemStack == null) return null;
+        if (!itemStack.hasItemMeta()) return null;
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if (!itemMeta.hasDisplayName()) return null;
+        return PlainTextComponentSerializer.plainText().serialize(itemMeta.displayName());
     }
 }

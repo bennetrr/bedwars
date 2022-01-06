@@ -3,7 +3,9 @@ package io.github.bennetrr.bedwarsplugin.game_elements;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class BPGame {
@@ -59,6 +61,11 @@ public class BPGame {
                 server.broadcast(Component.text("The Emerald Spawners are now on level III"));
             }
         }
+    }
+
+    @Nullable
+    public BPTeam getTeamForPlayer(Player player) {
+        return teams.stream().filter(team -> team.getPlayers().contains(player)).findFirst().orElse(null);
     }
 
     public BPMap getMap() {

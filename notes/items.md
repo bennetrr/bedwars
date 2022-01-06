@@ -38,6 +38,14 @@
 - [X] Enderpearl (7 Emeralds)
 - [X] TNT (8 Gold)
 
+# Upgrades
+
+- [ ] Strength x2 (8 Diamonds)
+- [ ] Regeneration x1 (3 Diamonds)
+- [ ] Protection on the armor x4 (5 Diamonds)
+- [ ] Haste x2 (4 Diamonds)
+- [ ] Spawner Upgrade x4 (6 Diamonds) [see `spawner.md`]
+
 # Traps
 
 - [ ] Alarm Trap
@@ -57,11 +65,3 @@
 - [ ] It's a trap!
     - Blindness 1
     - Slowness 2
-
-# Upgrades
-
-- [ ] Strength x2 (8 Diamonds)
-- [ ] Regeneration x1 (3 Diamonds)
-- [ ] Protection on the armor x4 (5 Diamonds)
-- [ ] Haste x2 (4 Diamonds)
-- [ ] Spawner Upgrade x4 (6 Diamonds) [see `spawner.md`]

@@ -16,6 +16,7 @@
 # Fixes
 
 - [ ] Test TNT-Jumping and Fireball-Jumping
+- [X] Add default sword and armor
 - [X] Cleanup at the end of a game and on enable
 - [X] Add onLogin-Event and teleport the players to spawn
 - [X] Fix that the spawners spawn the items not in the middle of the block

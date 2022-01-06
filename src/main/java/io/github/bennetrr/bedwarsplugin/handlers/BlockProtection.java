@@ -53,8 +53,8 @@ public class BlockProtection implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             if (!allowedBlocks.contains(event.getBlock().getType()) && !onlyBreakBlocks.contains(event.getBlock().getType())) {
-                event.setCancelled(true);
                 event.getPlayer().sendMessage(Component.text("You're not allowed to break this block!").color(NamedTextColor.RED));
+                event.setCancelled(true);
             }
         }
     }
@@ -63,8 +63,9 @@ public class BlockProtection implements Listener {
     public void onBlockPlace(BlockPlaceEvent event) {
         if (!event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             if (!allowedBlocks.contains(event.getBlock().getType()) && !onlyPlaceBlocks.contains(event.getBlock().getType())) {
+                if (!event.getBlock().getType().equals(Material.TNT) && !event.getBlock().getType().equals(Material.FIRE_CHARGE))
+                    event.getPlayer().sendMessage(Component.text("You're not allowed to place this block!").color(NamedTextColor.RED));
                 event.setCancelled(true);
-                event.getPlayer().sendMessage(Component.text("You're not allowed to place this block!").color(NamedTextColor.RED));
             }
         }
     }

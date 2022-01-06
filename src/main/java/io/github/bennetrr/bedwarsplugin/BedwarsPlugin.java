@@ -63,7 +63,7 @@ public class BedwarsPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CraftingProtection(), this);
         getServer().getPluginManager().registerEvents(new LoginHandler(this), this);
         getServer().getPluginManager().registerEvents(new RespawnHandler(this), this);
-//        getServer().getPluginManager().registerEvents(new TradeHandler(this), this);
+        getServer().getPluginManager().registerEvents(new TradeHandler(this), this);
 
         // Register the tick actions
         getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
@@ -88,6 +88,7 @@ public class BedwarsPlugin extends JavaPlugin {
     }
 
     public void startGame(int maxPlayersPerTeam, int maxTeams) throws WrongCommandArgumentsException, NotEnoughPlayersException {
+        reset();
         getServer().broadcast(Component.text("Starting a game!"));
         log("maxPlayersPerTeam=" + maxPlayersPerTeam);
         log("maxTeams=" + maxTeams);
@@ -136,6 +137,8 @@ public class BedwarsPlugin extends JavaPlugin {
     }
 
     public void reset() {
+        game = null;
+
         // TP
         for (Player player : getServer().getOnlinePlayers()) {
             player.teleport(spawnLoc);
@@ -144,6 +147,8 @@ public class BedwarsPlugin extends JavaPlugin {
             player.setBedSpawnLocation(null);
             player.setGameMode(GameMode.ADVENTURE);
         }
+
+        getConfig().set("players", null);
 
         // Delete items and other entities
         w.getEntitiesByClass(Item.class).forEach(Entity::remove);

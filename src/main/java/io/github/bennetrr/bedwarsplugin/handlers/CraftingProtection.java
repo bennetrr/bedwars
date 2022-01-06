@@ -14,7 +14,7 @@ public class CraftingProtection implements Listener {
     public void onCrafting(PrepareItemCraftEvent event) {
         if (event.getInventory().getResult() != null) {
             event.getInventory().setResult(new ItemStack(Material.AIR));
-            event.getViewers().forEach(humanEntity -> humanEntity.sendMessage(Component.text("You're not allowed to craft any items!").color(NamedTextColor.RED)));
+            event.getViewers().forEach(player -> player.sendMessage(Component.text("You're not allowed to craft any items!").color(NamedTextColor.RED)));
         }
     }
 }

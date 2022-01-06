@@ -8,7 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.jetbrains.annotations.Nullable;
 
 public class RespawnHandler implements Listener {
     private final BedwarsPlugin plugin;
@@ -17,19 +16,12 @@ public class RespawnHandler implements Listener {
         this.plugin = plugin;
     }
 
-    private @Nullable BPTeam getPlayersTeam(Player player) {
-        return plugin.getGame().getTeams().stream().filter(team -> team.getPlayers().contains(player)).findFirst().orElse(null);
-    }
-
     @EventHandler(priority = EventPriority.LOWEST)
     public void onRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
-        plugin.log("RespawnHandler", "Called");
         if (plugin.isGameRunning()) {
-            plugin.log("RespawnHandler", "Game is running");
             // Get the team of the player
-            BPTeam team = getPlayersTeam(player);
-            plugin.log("RespawnHandler", "Team = " + ((team == null) ? "Null" : team.getName()));
+            BPTeam team = plugin.getGame().getTeamForPlayer(player);
             if (team == null) return;
 
             // Set the respawn point of the player
