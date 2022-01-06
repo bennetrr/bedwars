@@ -23,11 +23,13 @@ public class RespawnHandler implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onRespawn(PlayerRespawnEvent event) {
+        Player player = event.getPlayer();
+        plugin.log("RespawnHandler", "Called");
         if (plugin.isGameRunning()) {
-            Player player = event.getPlayer();
-
+            plugin.log("RespawnHandler", "Game is running");
             // Get the team of the player
             BPTeam team = getPlayersTeam(player);
+            plugin.log("RespawnHandler", "Team = " + ((team == null) ? "Null" : team.getName()));
             if (team == null) return;
 
             // Set the respawn point of the player
@@ -37,6 +39,8 @@ public class RespawnHandler implements Listener {
             if (team.isEliminated()) {
                 player.setGameMode(GameMode.SPECTATOR);
             }
+        } else {
+            event.setRespawnLocation(plugin.getSpawnLoc());
         }
     }
 }

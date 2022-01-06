@@ -62,6 +62,7 @@ public class BedwarsPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Explosions(), this);
         getServer().getPluginManager().registerEvents(new CraftingProtection(), this);
         getServer().getPluginManager().registerEvents(new LoginHandler(this), this);
+        getServer().getPluginManager().registerEvents(new RespawnHandler(this), this);
 //        getServer().getPluginManager().registerEvents(new TradeHandler(this), this);
 
         // Register the tick actions
