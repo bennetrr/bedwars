@@ -29,7 +29,7 @@ public class Commands implements CommandExecutor {
 
     private void startCommand() {
         try {
-            plugin.startGame(1, 1);
+            plugin.startGame(1, 2);
         } catch (WrongCommandArgumentsException | NotEnoughPlayersException e) {
             e.printStackTrace();
         }

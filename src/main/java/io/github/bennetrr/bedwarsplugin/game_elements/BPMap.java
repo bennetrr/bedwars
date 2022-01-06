@@ -46,14 +46,14 @@ public class BPMap {
         diamondTimer++;
         if (diamondTimer >= diamondTimerMax) {
             diamondTimer = 0;
-            diamondSpawnerLocs.forEach(loc -> world.spawn(r.c(loc), Item.class, item -> item.setItemStack(new ItemStack(Material.DIAMOND, 1))));
+            diamondSpawnerLocs.forEach(loc -> world.spawn(r.c(loc, .5, .5), Item.class, item -> item.setItemStack(new ItemStack(Material.DIAMOND, 1))));
         }
 
         // Emeralds
         emeraldTimer++;
         if (emeraldTimer >= emeraldTimerMax) {
             emeraldTimer = 0;
-            emeraldSpawnerLocs.forEach(loc -> world.spawn(r.c(loc), Item.class, item -> item.setItemStack(new ItemStack(Material.EMERALD, 1))));
+            emeraldSpawnerLocs.forEach(loc -> world.spawn(r.c(loc, .5, .5), Item.class, item -> item.setItemStack(new ItemStack(Material.EMERALD, 1))));
         }
     }
 
@@ -81,12 +81,24 @@ public class BPMap {
         return endLoc;
     }
 
+    public Location getPasteLoc() {
+        return pasteLoc;
+    }
+
+    public int getDiamondTimer() {
+        return diamondTimer;
+    }
+
     public int getDiamondTimerMax() {
         return diamondTimerMax;
     }
 
     public void setDiamondTimerMax(int diamondTimerMax) {
         this.diamondTimerMax = diamondTimerMax;
+    }
+
+    public int getEmeraldTimer() {
+        return emeraldTimer;
     }
 
     public int getEmeraldTimerMax() {

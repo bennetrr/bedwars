@@ -24,8 +24,9 @@ public class BPTeam extends BPTeamTemplate {
     private final Team team;
     private final Villager itemVillager, upgradeVillager;
     private final LocationRelativizer r;
-    private final int ironTimerMax;
-    private final int goldTimerMax;
+
+    private int ironTimerMax;
+    private int goldTimerMax;
     private boolean eliminated = false;
     private int ironTimer;
     private int goldTimer;
@@ -74,9 +75,6 @@ public class BPTeam extends BPTeamTemplate {
             // TP
             player.teleport(r.c(spawnpoint));
 
-            // Spawnpoint
-            player.setBedSpawnLocation(r.c(spawnpoint), true);
-
             // Inventories
             player.getInventory().clear();
             player.getEnderChest().clear();
@@ -95,14 +93,14 @@ public class BPTeam extends BPTeamTemplate {
         ironTimer++;
         if (ironTimer >= ironTimerMax) {
             ironTimer = 0;
-            world.spawn(r.c(spawnerLoc), Item.class, item -> item.setItemStack(new ItemStack(Material.IRON_INGOT, 1)));
+            world.spawn(r.c(spawnerLoc, .5, .5), Item.class, item -> item.setItemStack(new ItemStack(Material.IRON_INGOT, 1)));
         }
 
         // Gold
         goldTimer++;
         if (goldTimer >= goldTimerMax) {
             goldTimer = 0;
-            world.spawn(r.c(spawnerLoc), Item.class, item -> item.setItemStack(new ItemStack(Material.GOLD_INGOT, 1)));
+            world.spawn(r.c(spawnerLoc, .5, .5), Item.class, item -> item.setItemStack(new ItemStack(Material.GOLD_INGOT, 1)));
         }
     }
 
@@ -114,6 +112,30 @@ public class BPTeam extends BPTeamTemplate {
         return team;
     }
 
+    public Villager getItemVillager() {
+        return itemVillager;
+    }
+
+    public Villager getUpgradeVillager() {
+        return upgradeVillager;
+    }
+
+    public int getIronTimerMax() {
+        return ironTimerMax;
+    }
+
+    public void setIronTimerMax(int ironTimerMax) {
+        this.ironTimerMax = ironTimerMax;
+    }
+
+    public int getGoldTimerMax() {
+        return goldTimerMax;
+    }
+
+    public void setGoldTimerMax(int goldTimerMax) {
+        this.goldTimerMax = goldTimerMax;
+    }
+
     public boolean isEliminated() {
         return eliminated;
     }
@@ -122,11 +144,11 @@ public class BPTeam extends BPTeamTemplate {
         this.eliminated = eliminated;
     }
 
-    public Villager getItemVillager() {
-        return itemVillager;
+    public int getIronTimer() {
+        return ironTimer;
     }
 
-    public Villager getUpgradeVillager() {
-        return upgradeVillager;
+    public int getGoldTimer() {
+        return goldTimer;
     }
 }

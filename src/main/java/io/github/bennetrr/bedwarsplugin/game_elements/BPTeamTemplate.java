@@ -58,8 +58,4 @@ public class BPTeamTemplate {
     public Location getSpawnpoint() {
         return spawnpoint;
     }
-
-    public World getWorld() {
-        return world;
-    }
 }

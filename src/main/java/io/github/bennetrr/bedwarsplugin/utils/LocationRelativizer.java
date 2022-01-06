@@ -11,28 +11,24 @@ public class LocationRelativizer {
         this.newReferencePoint = newReferencePoint;
     }
 
-    public Location convert(Location location) {
+    public Location convert(Location location, double zAdjustment, double xyAdjustment) {
         double relX = location.getX() - oldReferencePoint.getX();
         double relY = location.getY() - oldReferencePoint.getY();
         double relZ = location.getZ() - oldReferencePoint.getZ();
 
         Location newLocation = newReferencePoint.clone();
         newLocation.add(relX, relY, relZ);
-        newLocation.add(.5, 0, .5);
+        newLocation.add(xyAdjustment, zAdjustment, xyAdjustment);
         newLocation.setYaw(location.getYaw());
         newLocation.setPitch(location.getPitch());
         return newLocation;
     }
 
     public Location c(Location a) {
-        return convert(a);
+        return convert(a, 0, .5);
     }
 
-    public Location getOldReferencePoint() {
-        return oldReferencePoint;
-    }
-
-    public Location getNewReferencePoint() {
-        return newReferencePoint;
+    public Location c(Location a, double z, double xy) {
+        return convert(a, z, xy);
     }
 }

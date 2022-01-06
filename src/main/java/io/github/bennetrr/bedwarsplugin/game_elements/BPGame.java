@@ -9,11 +9,13 @@ import java.util.List;
 public class BPGame {
     private final BPMap map;
     private final List<BPTeam> teams;
+    private final BPSpectatingTeam spectatingTeam;
     private int runtimeTimer;
 
-    public BPGame(BPMap map, List<BPTeam> teams) {
+    public BPGame(BPMap map, List<BPTeam> teams, BPSpectatingTeam spectatingTeam) {
         this.map = map;
         this.teams = teams;
+        this.spectatingTeam = spectatingTeam;
 
         runtimeTimer = 0;
     }
@@ -65,5 +67,13 @@ public class BPGame {
 
     public List<BPTeam> getTeams() {
         return teams;
+    }
+
+    public BPSpectatingTeam getSpectatingTeam() {
+        return spectatingTeam;
+    }
+
+    public int getRuntimeTimer() {
+        return runtimeTimer;
     }
 }

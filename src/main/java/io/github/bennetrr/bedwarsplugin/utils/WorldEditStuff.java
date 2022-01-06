@@ -13,7 +13,6 @@ import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
 import com.sk89q.worldedit.world.block.BlockState;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
@@ -30,8 +29,8 @@ public class WorldEditStuff {
         Location firstLoc = mapPasteLoc.clone();
         firstLoc.setY(0);
         Location secondLoc = mapPasteLoc.clone();
-        secondLoc.add(160, 0, 160);
-        secondLoc.setY(256);
+        secondLoc.add(159, 0, 159);
+        secondLoc.setY(254);
 
         // Select the region
         Region selection = new CuboidRegion(world, location2BlockVector3(firstLoc), location2BlockVector3(secondLoc));
@@ -47,10 +46,7 @@ public class WorldEditStuff {
     }
 
     public static void copyMap(Location startLoc, Location endLoc, Location pasteLoc) {
-        Bukkit.getLogger().info("[Bedwars / WorldEditStuff] StartLoc: " + startLoc + "    EndLoc: " + endLoc + "    PasteLoc: " + pasteLoc);
         World world = BukkitAdapter.adapt(startLoc.getWorld());
-
-        Bukkit.getLogger().info("[Bedwars / WorldEditStuff] StartLoc: " + location2BlockVector3(startLoc) + "    EndLoc: " + location2BlockVector3(endLoc) + "    PasteLoc: " + location2BlockVector3(pasteLoc));
 
         // Select the region to copy
         CuboidRegion copyRegion = new CuboidRegion(world, location2BlockVector3(startLoc), location2BlockVector3(endLoc));
@@ -67,7 +63,6 @@ public class WorldEditStuff {
         // Paste
         try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
             Operation pasteOperation = new ClipboardHolder(clipboard).createPaste(editSession).to(location2BlockVector3(pasteLoc)).build();
-            Bukkit.getLogger().info(("[Bedwars / WorldEditStuff] " + ((ForwardExtentCopy) pasteOperation).toString()));
             Operations.complete(pasteOperation);
         }
     }

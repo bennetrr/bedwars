@@ -56,13 +56,6 @@ public class VillagerTrades {
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.EMERALD, 6), sellItem});
         }
         {
-            ItemStack sellItem = new ItemStack(Material.SHIELD);
-            ItemMeta itemMeta = sellItem.getItemMeta();
-            itemMeta.setUnbreakable(true);
-            sellItem.setItemMeta(itemMeta);
-            itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 20), sellItem});
-        }
-        {
             ItemStack sellItem = new ItemStack(Material.BOW);
             ItemMeta itemMeta = sellItem.getItemMeta();
             itemMeta.setUnbreakable(true);

@@ -26,7 +26,7 @@ public class BlockProtection implements Listener {
         allowedBlocks.add(Material.ORANGE_WOOL);
         allowedBlocks.add(Material.GREEN_WOOL);
         allowedBlocks.add(Material.RED_WOOL);
-        allowedBlocks.add(Material.GRAY_WOOL);
+        allowedBlocks.add(Material.LIGHT_GRAY_WOOL);
         allowedBlocks.add(Material.END_STONE);
         allowedBlocks.add(Material.OAK_PLANKS);
         allowedBlocks.add(Material.CYAN_STAINED_GLASS);
