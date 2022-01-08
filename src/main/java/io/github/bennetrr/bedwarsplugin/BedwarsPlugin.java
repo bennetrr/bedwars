@@ -48,7 +48,7 @@ public class BedwarsPlugin extends JavaPlugin {
         spawnLoc = new Location(w, 999, 43, 7);
         mapPasteLoc = new Location(w, 608, 50, -144);
         spectatingTeamSpawnpoint = new Location(w, 700, 65, -40);
-        map = Maps.getMap(w, mapPasteLoc);
+        map = Maps.getMap(w, mapPasteLoc, this);
 
         // Do a reset
         reset();
@@ -59,7 +59,7 @@ public class BedwarsPlugin extends JavaPlugin {
 
         // Register event handlers
         getServer().getPluginManager().registerEvents(new BlockProtection(), this);
-        getServer().getPluginManager().registerEvents(new Explosions(), this);
+        getServer().getPluginManager().registerEvents(new Explosives(), this);
         getServer().getPluginManager().registerEvents(new CraftingProtection(), this);
         getServer().getPluginManager().registerEvents(new LoginHandler(this), this);
         getServer().getPluginManager().registerEvents(new RespawnHandler(this), this);
@@ -70,15 +70,15 @@ public class BedwarsPlugin extends JavaPlugin {
             if (game == null) {
                 // Pre-game loop
                 for (Player player : getServer().getOnlinePlayers()) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 3, 265, false, false, false));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 3, 265, false, false, false));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 3, 265, false, false, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 3, 265, false, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 3, 265, false, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 3, 265, false, false));
                 }
             } else {
                 // During-game loop
                 game.tickActions(getServer());
                 for (Player player : getServer().getOnlinePlayers()) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 3, 265, false, false, false));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 3, 1, false, false));
                 }
             }
         }, 1L, 1L);

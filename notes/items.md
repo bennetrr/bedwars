@@ -40,28 +40,28 @@
 
 # Upgrades
 
-- [ ] Strength x2 (8 Diamonds)
-- [ ] Regeneration x1 (3 Diamonds)
-- [ ] Protection on the armor x4 (5 Diamonds)
-- [ ] Haste x2 (4 Diamonds)
-- [ ] Spawner Upgrade x4 (6 Diamonds) [see `spawner.md`]
+- [X] Strength x2 (8 Diamonds) [GOLDEN_SWORD]
+- [X] Regeneration x1 (3 Diamonds) [GOLDEN_CARROT]
+- [X] Protection on the armor x4 (5 Diamonds) [CHAINMAIL_CHESTPLATE]
+- [X] Haste x2 (4 Diamonds) [GOLDEN_PICKAXE]
+- [X] Spawner Upgrade -> `spawner.md` x4 (6 Diamonds) [DEEPSLATE_EMERALD_ORE]
 
 # Traps
 
-- [ ] Alarm Trap
+- [X] Alarm Trap [REDSTONE_TORCH]
     - Only signal
       <br><br>
-- [ ] Mining Fatigue Trap
+- [X] Mining Fatigue Trap [WOODEN_PICKAXE]
     - Mining Fatigue 1
       <br><br>
-- [ ] Counteroffensive Trap
+- [X] Counteroffensive Trap [TRIPWIRE_HOOK]
     - Speed 10
     - Jump Boost 15
       <br><br>
-- [ ] Detection Trap
+- [X] Detection Trap [OBSERVER]
     - Glowing
     - Remove Invisibility
       <br><br>
-- [ ] It's a trap!
+- [X] It's a trap! [INK_SAC]
     - Blindness 1
     - Slowness 2

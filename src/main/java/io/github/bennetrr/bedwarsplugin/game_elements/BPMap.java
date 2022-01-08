@@ -1,5 +1,6 @@
 package io.github.bennetrr.bedwarsplugin.game_elements;
 
+import io.github.bennetrr.bedwarsplugin.BedwarsPlugin;
 import io.github.bennetrr.bedwarsplugin.utils.LocationRelativizer;
 import io.github.bennetrr.bedwarsplugin.utils.WorldEditStuff;
 import org.bukkit.Location;
@@ -18,19 +19,21 @@ public class BPMap {
     private final Location endLoc;
     private final Location pasteLoc;
     private final World world;
+    private final BedwarsPlugin plugin;
 
     private int diamondTimer;
     private int diamondTimerMax;
     private int emeraldTimer;
     private int emeraldTimerMax;
 
-    public BPMap(List<BPTeamTemplate> teams, List<Location> diamondSpawnerLocs, List<Location> emeraldSpawnerLocs, Location startLoc, Location endLoc, Location pasteLoc) {
+    public BPMap(List<BPTeamTemplate> teams, List<Location> diamondSpawnerLocs, List<Location> emeraldSpawnerLocs, Location startLoc, Location endLoc, Location pasteLoc, BedwarsPlugin plugin) {
         this.teams = teams;
         this.diamondSpawnerLocs = diamondSpawnerLocs;
         this.emeraldSpawnerLocs = emeraldSpawnerLocs;
         this.startLoc = startLoc;
         this.endLoc = endLoc;
         this.pasteLoc = pasteLoc;
+        this.plugin = plugin;
         world = this.startLoc.getWorld();
 
         diamondTimer = 500;
@@ -54,6 +57,7 @@ public class BPMap {
         if (emeraldTimer >= emeraldTimerMax) {
             emeraldTimer = 0;
             emeraldSpawnerLocs.forEach(loc -> world.spawn(r.c(loc, .5, .5), Item.class, item -> item.setItemStack(new ItemStack(Material.EMERALD, 1))));
+            plugin.getGame().getTeams().forEach(BPTeam::spawnEmeralds);
         }
     }
 

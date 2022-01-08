@@ -3,6 +3,7 @@ package io.github.bennetrr.bedwarsplugin.utils;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
@@ -44,11 +45,20 @@ public class ItemUtils {
         return Material.WHITE_BED;
     }
 
-    public static ItemStack getUnbreakableItem(Material material, int count) {
+    public static ItemStack getItem(Material material, int count, boolean unbreakable) {
         ItemStack itemStack = new ItemStack(material, count);
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setUnbreakable(true);
+        itemMeta.setUnbreakable(unbreakable);
         itemStack.setItemMeta(itemMeta);
+        return itemStack;
+    }
+
+    public static ItemStack getItem(Material material, int count, boolean unbreakable, Enchantment enchantment, int level) {
+        ItemStack itemStack = new ItemStack(material, count);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.setUnbreakable(unbreakable);
+        itemStack.setItemMeta(itemMeta);
+        if (level > 0) itemStack.addEnchantment(enchantment, level);
         return itemStack;
     }
 

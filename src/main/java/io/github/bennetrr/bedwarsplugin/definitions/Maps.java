@@ -1,5 +1,6 @@
 package io.github.bennetrr.bedwarsplugin.definitions;
 
+import io.github.bennetrr.bedwarsplugin.BedwarsPlugin;
 import io.github.bennetrr.bedwarsplugin.game_elements.BPMap;
 import io.github.bennetrr.bedwarsplugin.game_elements.BPTeamTemplate;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Maps {
-    public static BPMap getMap(World w, Location mapPasteLoc) {
+    public static BPMap getMap(World w, Location mapPasteLoc, BedwarsPlugin plugin) {
         // Team Templates
         List<BPTeamTemplate> teamTemplates = new ArrayList<>();
         teamTemplates.add(new BPTeamTemplate(NamedTextColor.RED, "teamRed", "Team Nether", new Location(w, -36, 41, 0), new Location(w, -54, 41, 6, -90, 0), new Location(w, -54, 41, -6, -90, 0), new Location(w, -55, 41, 0), new Location(w, -49, 41, 0, -90, 0)));
@@ -35,6 +36,6 @@ public class Maps {
         Location startLoc = new Location(w, -80, 32, -80);
         Location endLoc = new Location(w, 79, 74, 79);
 
-        return new BPMap(teamTemplates, diamondSpawnerLocs, emeraldSpawnerLocs, startLoc, endLoc, mapPasteLoc);
+        return new BPMap(teamTemplates, diamondSpawnerLocs, emeraldSpawnerLocs, startLoc, endLoc, mapPasteLoc, plugin);
     }
 }

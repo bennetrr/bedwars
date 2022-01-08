@@ -2,11 +2,13 @@ package io.github.bennetrr.bedwarsplugin.game_elements;
 
 import io.github.bennetrr.bedwarsplugin.BedwarsPlugin;
 import io.github.bennetrr.bedwarsplugin.definitions.VillagerTrades;
+import io.github.bennetrr.bedwarsplugin.traps.BPTrap;
 import io.github.bennetrr.bedwarsplugin.utils.LocationRelativizer;
 import io.github.bennetrr.bedwarsplugin.utils.VillagerUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -15,26 +17,29 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.Range;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
-import static io.github.bennetrr.bedwarsplugin.utils.ItemUtils.getUnbreakableItem;
+import static io.github.bennetrr.bedwarsplugin.utils.ItemUtils.getItem;
 
 public class BPTeam extends BPTeamTemplate {
+    private final static Enchantment PROTECTION = Enchantment.PROTECTION_ENVIRONMENTAL;
     private final List<Player> players;
     private final Team team;
     private final Villager itemVillager, upgradeVillager;
     private final LocationRelativizer r;
     private final BedwarsPlugin plugin;
-
+    private final Queue<BPTrap> traps;
     private int ironTimerMax;
     private int goldTimerMax;
     private boolean eliminated = false;
     private int ironTimer;
     private int goldTimer;
-
     private @Range(from = 0, to = 2) int strengthUpgrade;
     private boolean regenUpgrade;
     private @Range(from = 0, to = 4) int protectionUpgrade;
@@ -56,6 +61,8 @@ public class BPTeam extends BPTeamTemplate {
         protectionUpgrade = 0;
         hasteUpgrade = 0;
         spawnerUpgrade = 0;
+
+        traps = new LinkedList<>();
 
         // Team for display in game
         team = Bukkit.getScoreboardManager().getMainScoreboard().registerNewTeam(this.name);
@@ -129,28 +136,28 @@ public class BPTeam extends BPTeamTemplate {
                 case "leather" -> {
                     if (inventory.getHelmet() == null || inventory.getChestplate() == null || inventory.getLeggings() == null || inventory.getBoots() == null || !inventory.getHelmet().getType().equals(Material.LEATHER_HELMET) || !inventory.getChestplate().getType().equals(Material.LEATHER_CHESTPLATE) || !inventory.getLeggings().getType().equals(Material.LEATHER_LEGGINGS) || !inventory.getBoots().getType().equals(Material.LEATHER_BOOTS)) {
                         {
-                            ItemStack itemStack = getUnbreakableItem(Material.LEATHER_HELMET, 1);
+                            ItemStack itemStack = getItem(Material.LEATHER_HELMET, 1, true, PROTECTION, protectionUpgrade);
                             LeatherArmorMeta itemMeta = (LeatherArmorMeta) itemStack.getItemMeta();
                             itemMeta.setColor(Color.fromRGB(color.value()));
                             itemStack.setItemMeta(itemMeta);
                             inventory.setHelmet(itemStack);
                         }
                         {
-                            ItemStack itemStack = getUnbreakableItem(Material.LEATHER_CHESTPLATE, 1);
+                            ItemStack itemStack = getItem(Material.LEATHER_CHESTPLATE, 1, true, PROTECTION, protectionUpgrade);
                             LeatherArmorMeta itemMeta = (LeatherArmorMeta) itemStack.getItemMeta();
                             itemMeta.setColor(Color.fromRGB(color.value()));
                             itemStack.setItemMeta(itemMeta);
                             inventory.setChestplate(itemStack);
                         }
                         {
-                            ItemStack itemStack = getUnbreakableItem(Material.LEATHER_LEGGINGS, 1);
+                            ItemStack itemStack = getItem(Material.LEATHER_LEGGINGS, 1, true, PROTECTION, protectionUpgrade);
                             LeatherArmorMeta itemMeta = (LeatherArmorMeta) itemStack.getItemMeta();
                             itemMeta.setColor(Color.fromRGB(color.value()));
                             itemStack.setItemMeta(itemMeta);
                             inventory.setLeggings(itemStack);
                         }
                         {
-                            ItemStack itemStack = getUnbreakableItem(Material.LEATHER_BOOTS, 1);
+                            ItemStack itemStack = getItem(Material.LEATHER_BOOTS, 1, true, PROTECTION, protectionUpgrade);
                             LeatherArmorMeta itemMeta = (LeatherArmorMeta) itemStack.getItemMeta();
                             itemMeta.setColor(Color.fromRGB(color.value()));
                             itemStack.setItemMeta(itemMeta);
@@ -160,27 +167,46 @@ public class BPTeam extends BPTeamTemplate {
                 }
                 case "iron" -> {
                     if (inventory.getHelmet() == null || inventory.getChestplate() == null || inventory.getLeggings() == null || inventory.getBoots() == null || !inventory.getHelmet().getType().equals(Material.IRON_HELMET) || !inventory.getChestplate().getType().equals(Material.IRON_CHESTPLATE) || !inventory.getLeggings().getType().equals(Material.IRON_LEGGINGS) || !inventory.getBoots().getType().equals(Material.IRON_BOOTS)) {
-                        inventory.setHelmet(getUnbreakableItem(Material.IRON_HELMET, 1));
-                        inventory.setChestplate(getUnbreakableItem(Material.IRON_CHESTPLATE, 1));
-                        inventory.setLeggings(getUnbreakableItem(Material.IRON_LEGGINGS, 1));
-                        inventory.setBoots(getUnbreakableItem(Material.IRON_BOOTS, 1));
+                        inventory.setHelmet(getItem(Material.IRON_HELMET, 1, true, PROTECTION, protectionUpgrade));
+                        inventory.setChestplate(getItem(Material.IRON_CHESTPLATE, 1, true, PROTECTION, protectionUpgrade));
+                        inventory.setLeggings(getItem(Material.IRON_LEGGINGS, 1, true, PROTECTION, protectionUpgrade));
+                        inventory.setBoots(getItem(Material.IRON_BOOTS, 1, true, PROTECTION, protectionUpgrade));
                     }
                 }
                 case "diamond" -> {
                     if (inventory.getHelmet() == null || inventory.getChestplate() == null || inventory.getLeggings() == null || inventory.getBoots() == null || !inventory.getHelmet().getType().equals(Material.DIAMOND_HELMET) || !inventory.getChestplate().getType().equals(Material.DIAMOND_CHESTPLATE) || !inventory.getLeggings().getType().equals(Material.DIAMOND_LEGGINGS) || !inventory.getBoots().getType().equals(Material.DIAMOND_BOOTS)) {
-                        inventory.setHelmet(getUnbreakableItem(Material.DIAMOND_HELMET, 1));
-                        inventory.setChestplate(getUnbreakableItem(Material.DIAMOND_CHESTPLATE, 1));
-                        inventory.setLeggings(getUnbreakableItem(Material.DIAMOND_LEGGINGS, 1));
-                        inventory.setBoots(getUnbreakableItem(Material.DIAMOND_BOOTS, 1));
+                        inventory.setHelmet(getItem(Material.DIAMOND_HELMET, 1, true, PROTECTION, protectionUpgrade));
+                        inventory.setChestplate(getItem(Material.DIAMOND_CHESTPLATE, 1, true, PROTECTION, protectionUpgrade));
+                        inventory.setLeggings(getItem(Material.DIAMOND_LEGGINGS, 1, true, PROTECTION, protectionUpgrade));
+                        inventory.setBoots(getItem(Material.DIAMOND_BOOTS, 1, true, PROTECTION, protectionUpgrade));
                     }
                 }
             }
 
             // Give default stone sword
             if (!inventory.contains(Material.STONE_SWORD) && !inventory.contains(Material.IRON_SWORD) && !inventory.contains(Material.DIAMOND_SWORD)) {
-                inventory.addItem(getUnbreakableItem(Material.STONE_SWORD, 1));
+                inventory.addItem(getItem(Material.STONE_SWORD, 1, true));
+            }
+
+            // Apply effects
+            switch (strengthUpgrade) {
+                case 1 -> player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 3, 0, false, false));
+                case 2 -> player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 3, 1, false, false));
+            }
+
+            if (regenUpgrade)
+                player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 3, 0, false, false));
+
+            switch (hasteUpgrade) {
+                case 1 -> player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 3, 0, false, false));
+                case 2 -> player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 3, 1, false, false));
             }
         }
+    }
+
+    public void spawnEmeralds() {
+        if (spawnerUpgrade > 2)
+            world.spawn(r.c(spawnerLoc, .5, .5), Item.class, item -> item.setItemStack(new ItemStack(Material.EMERALD, 1)));
     }
 
     public List<Player> getPlayers() {
@@ -256,15 +282,15 @@ public class BPTeam extends BPTeamTemplate {
         return goldTimer;
     }
 
-    public int getStrengthUpgrade() {
+    public @Range(from = 0, to = 2) int getStrengthUpgrade() {
         return strengthUpgrade;
     }
 
-    public void setStrengthUpgrade(int strengthUpgrade) {
+    public void setStrengthUpgrade(@Range(from = 0, to = 2) int strengthUpgrade) {
         this.strengthUpgrade = strengthUpgrade;
     }
 
-    public boolean isRegenUpgrade() {
+    public boolean hasRegenUpgrade() {
         return regenUpgrade;
     }
 
@@ -272,27 +298,35 @@ public class BPTeam extends BPTeamTemplate {
         this.regenUpgrade = regenUpgrade;
     }
 
-    public int getProtectionUpgrade() {
+    public @Range(from = 0, to = 4) int getProtectionUpgrade() {
         return protectionUpgrade;
     }
 
-    public void setProtectionUpgrade(int protectionUpgrade) {
+    public void setProtectionUpgrade(@Range(from = 0, to = 4) int protectionUpgrade) {
         this.protectionUpgrade = protectionUpgrade;
     }
 
-    public int getHasteUpgrade() {
+    public @Range(from = 0, to = 2) int getHasteUpgrade() {
         return hasteUpgrade;
     }
 
-    public void setHasteUpgrade(int hasteUpgrade) {
+    public void setHasteUpgrade(@Range(from = 0, to = 2) int hasteUpgrade) {
         this.hasteUpgrade = hasteUpgrade;
     }
 
-    public int getSpawnerUpgrade() {
+    public @Range(from = 0, to = 4) int getSpawnerUpgrade() {
         return spawnerUpgrade;
     }
 
-    public void setSpawnerUpgrade(int spawnerUpgrade) {
+    public void setSpawnerUpgrade(@Range(from = 0, to = 4) int spawnerUpgrade) {
         this.spawnerUpgrade = spawnerUpgrade;
+    }
+
+    public List<? extends BPTrap> getTraps() {
+        return traps.stream().toList();
+    }
+
+    public void addTrap(BPTrap trap) {
+        traps.add(trap);
     }
 }

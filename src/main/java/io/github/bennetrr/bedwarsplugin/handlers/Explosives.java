@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-public class Explosions implements Listener {
+public class Explosives implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void onFireballShoot(PlayerInteractEvent event) {
         Player player = event.getPlayer();
