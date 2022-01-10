@@ -25,7 +25,7 @@ public class RespawnHandler implements Listener {
             if (team == null) return;
 
             // Set the respawn point of the player
-            event.setRespawnLocation(team.getSpawnpoint());
+            event.setRespawnLocation(team.getSpawnLoc());
 
             // If the team is eliminated, set the player to spectator mode
             if (team.isEliminated()) {

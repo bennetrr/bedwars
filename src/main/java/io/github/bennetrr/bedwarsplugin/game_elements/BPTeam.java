@@ -5,6 +5,8 @@ import io.github.bennetrr.bedwarsplugin.definitions.VillagerTrades;
 import io.github.bennetrr.bedwarsplugin.traps.BPTrap;
 import io.github.bennetrr.bedwarsplugin.utils.LocationRelativizer;
 import io.github.bennetrr.bedwarsplugin.utils.VillagerUtils;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.*;
@@ -19,6 +21,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Range;
 
 import java.util.LinkedList;
@@ -35,9 +38,10 @@ public class BPTeam extends BPTeamTemplate {
     private final LocationRelativizer r;
     private final BedwarsPlugin plugin;
     private final Queue<BPTrap> traps;
+    private BPTrap activeTrap;
     private int ironTimerMax;
     private int goldTimerMax;
-    private boolean eliminated = false;
+    private boolean eliminated;
     private int ironTimer;
     private int goldTimer;
     private @Range(from = 0, to = 2) int strengthUpgrade;
@@ -46,8 +50,8 @@ public class BPTeam extends BPTeamTemplate {
     private @Range(from = 0, to = 2) int hasteUpgrade;
     private @Range(from = 0, to = 4) int spawnerUpgrade;
 
-    public BPTeam(NamedTextColor color, String name, String fullName, Location bedLoc, Location itemVillagerLoc, Location upgradeVillagerLoc, Location spawnerLoc, Location spawnpoint, List<Player> players, Location mapStartLoc, Location mapPasteLoc) {
-        super(color, name, fullName, bedLoc, itemVillagerLoc, upgradeVillagerLoc, spawnerLoc, spawnpoint);
+    public BPTeam(NamedTextColor color, String name, String fullName, Location bedLoc, Location itemVillagerLoc, Location upgradeVillagerLoc, Location spawnerLoc, Location spawnpoint, List<Player> players, Location mapStartLoc, Location mapPasteLoc, Location startLoc, Location endLoc) {
+        super(color, name, fullName, bedLoc, itemVillagerLoc, upgradeVillagerLoc, spawnerLoc, spawnpoint, startLoc, endLoc);
         this.players = players;
         plugin = BedwarsPlugin.getPlugin(BedwarsPlugin.class);
 
@@ -61,6 +65,8 @@ public class BPTeam extends BPTeamTemplate {
         protectionUpgrade = 0;
         hasteUpgrade = 0;
         spawnerUpgrade = 0;
+        eliminated = false;
+        activeTrap = null;
 
         traps = new LinkedList<>();
 
@@ -109,7 +115,7 @@ public class BPTeam extends BPTeamTemplate {
     }
 
     public static BPTeam fromTemplate(BPTeamTemplate t, List<Player> players, Location mapStartLoc, Location mapPasteLoc) {
-        return new BPTeam(t.getColor(), t.getName(), t.getFullName(), t.getBedLoc(), t.getItemVillagerLoc(), t.getUpgradeVillagerLoc(), t.getSpawnerLoc(), t.getSpawnpoint(), players, mapStartLoc, mapPasteLoc);
+        return new BPTeam(t.getColor(), t.getName(), t.getFullName(), t.getBedLoc(), t.getItemVillagerLoc(), t.getUpgradeVillagerLoc(), t.getSpawnerLoc(), t.getSpawnLoc(), players, mapStartLoc, mapPasteLoc, t.getStartLoc(), t.getEndLoc());
     }
 
     public void tickActions() {
@@ -202,6 +208,40 @@ public class BPTeam extends BPTeamTemplate {
                 case 2 -> player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 3, 1, false, false));
             }
         }
+
+        Vector startVector = new Vector(startLoc.getX(), 0, startLoc.getZ());
+        Vector endVector = new Vector(endLoc.getX(), 0, endLoc.getZ());
+
+        boolean playerInArea = false;
+
+        // Traps
+        for (Player player : plugin.getServer().getOnlinePlayers()) {
+            plugin.log("Traps", "Player: " + player.getName());
+            // If player is in this team, continue with the next player
+            if (players.contains(player)) continue;
+            plugin.log("Traps", "Player is not in this team");
+            // Check
+            // TODO: Use converted location (r.c())
+            Vector playerVector = new Vector(player.getLocation().getX(), 0, player.getLocation().getZ());
+            if (playerVector.isInAABB(startVector, endVector)) {
+                plugin.log("Traps", "Player is in teams area");
+                // If there is no active trap and if there are available traps
+                if (activeTrap == null && !traps.isEmpty()) {
+                    plugin.log("Traps", "Using a new Trap");
+                    activeTrap = traps.remove();
+                    players.forEach(teamPlayer -> {
+                        teamPlayer.sendMessage(Component.text("Your trap got triggered!").color(NamedTextColor.DARK_RED));
+                        teamPlayer.playSound(Sound.sound(Key.key("minecraft:block.sculk_sensor.clicking_stop"), Sound.Source.MASTER, 0.5F, 1));
+                    });
+                }
+                activeTrap.action(player);
+                playerInArea = true;
+            }
+        }
+        if (!playerInArea) {
+            plugin.log("Traps", "Stopped trap");
+            activeTrap = null;
+        }
     }
 
     public void spawnEmeralds() {
@@ -234,8 +274,8 @@ public class BPTeam extends BPTeamTemplate {
     }
 
     @Override
-    public Location getSpawnpoint() {
-        return r.c(spawnpoint);
+    public Location getSpawnLoc() {
+        return r.c(spawnLoc);
     }
 
     public Team getTeam() {

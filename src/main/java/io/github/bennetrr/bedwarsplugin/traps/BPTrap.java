@@ -2,8 +2,6 @@ package io.github.bennetrr.bedwarsplugin.traps;
 
 import org.bukkit.entity.Player;
 
-import java.util.List;
-
 public abstract class BPTrap {
     private final String name;
 
@@ -11,7 +9,7 @@ public abstract class BPTrap {
         this.name = name;
     }
 
-    public abstract void action(List<Player> players);
+    public abstract void action(Player player);
 
     public String getName() {
         return name;

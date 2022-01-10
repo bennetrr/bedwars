@@ -12,10 +12,12 @@ public class BPTeamTemplate {
     protected final Location itemVillagerLoc;
     protected final Location upgradeVillagerLoc;
     protected final Location spawnerLoc;
-    protected final Location spawnpoint;
+    protected final Location spawnLoc;
+    protected final Location startLoc;
+    protected final Location endLoc;
     protected final World world;
 
-    public BPTeamTemplate(NamedTextColor color, String name, String fullName, Location bedLoc, Location itemVillagerLoc, Location upgradeVillagerLoc, Location spawnerLoc, Location spawnpoint) {
+    public BPTeamTemplate(NamedTextColor color, String name, String fullName, Location bedLoc, Location itemVillagerLoc, Location upgradeVillagerLoc, Location spawnerLoc, Location spawnLoc, Location startLoc, Location endLoc) {
         this.color = color;
         this.name = name;
         this.fullName = fullName;
@@ -23,8 +25,10 @@ public class BPTeamTemplate {
         this.itemVillagerLoc = itemVillagerLoc;
         this.upgradeVillagerLoc = upgradeVillagerLoc;
         this.spawnerLoc = spawnerLoc;
-        this.spawnpoint = spawnpoint;
-        world = spawnpoint.getWorld();
+        this.spawnLoc = spawnLoc;
+        world = spawnLoc.getWorld();
+        this.startLoc = startLoc;
+        this.endLoc = endLoc;
     }
 
     public NamedTextColor getColor() {
@@ -55,7 +59,15 @@ public class BPTeamTemplate {
         return spawnerLoc;
     }
 
-    public Location getSpawnpoint() {
-        return spawnpoint;
+    public Location getSpawnLoc() {
+        return spawnLoc;
+    }
+
+    public Location getStartLoc() {
+        return startLoc;
+    }
+
+    public Location getEndLoc() {
+        return endLoc;
     }
 }
