@@ -2,7 +2,7 @@
 
 - [X] Process upgrades and traps
 - [ ] Displays for upgrades and traps
-- [ ] Winner determination
+- [X] Winner determination
 - [X] Death management
 - [ ] Commands and config GUI
     - [ ] `/start` without arguments as alias for `/bedwars start`

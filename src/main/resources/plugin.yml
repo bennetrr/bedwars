@@ -6,7 +6,12 @@ depend:
   - FastAsyncWorldEdit
 commands:
   start:
-    description: This command starts a game
-    usage: /start <maxPlayersPerTeam> <maxTeams>
-    permission: BedwarsPlugin.start
+    description: Start a new game
+    usage: /start
+    permission: bedwars.start
+    permission-message: You don't have <permission>
+  teaminfo:
+    description: Show info about your team
+    usage: /teaminfo
+    permission: bedwars.teaminfo
     permission-message: You don't have <permission>

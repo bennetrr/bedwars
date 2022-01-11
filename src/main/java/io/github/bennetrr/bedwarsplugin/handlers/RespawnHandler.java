@@ -2,6 +2,7 @@ package io.github.bennetrr.bedwarsplugin.handlers;
 
 import io.github.bennetrr.bedwarsplugin.BedwarsPlugin;
 import io.github.bennetrr.bedwarsplugin.game_elements.BPTeam;
+import net.kyori.adventure.text.Component;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,6 +31,7 @@ public class RespawnHandler implements Listener {
             // If the team is eliminated, set the player to spectator mode
             if (team.isBedDestroyed()) {
                 player.setGameMode(GameMode.SPECTATOR);
+                plugin.getServer().broadcast(Component.text("Final Kill: " + player.getName() + " (" + team.getFullName() + ")").color(team.getColor()));
             }
         } else {
             event.setRespawnLocation(plugin.getSpawnLoc());

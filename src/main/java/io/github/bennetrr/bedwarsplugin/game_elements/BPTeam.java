@@ -43,6 +43,7 @@ public class BPTeam extends BPTeamTemplate {
     private int ironTimerMax;
     private int goldTimerMax;
     private boolean bedDestroyed;
+    private boolean eliminated;
     private int ironTimer;
     private int goldTimer;
     private @Range(from = 0, to = 2) int strengthUpgrade;
@@ -67,6 +68,7 @@ public class BPTeam extends BPTeamTemplate {
         hasteUpgrade = 0;
         spawnerUpgrade = 0;
         bedDestroyed = false;
+        eliminated = false;
         activeTrap = null;
 
         traps = new LinkedList<>();
@@ -249,6 +251,12 @@ public class BPTeam extends BPTeamTemplate {
             plugin.getServer().getOnlinePlayers().stream().filter(player -> !players.contains(player)).forEach(player ->
                 player.sendMessage(Component.text("The bed of " + fullName + "got destroyed!").color(color)));
         }
+
+        // Eliminated
+        if (players.stream().noneMatch(player -> player.getGameMode().equals(GameMode.SURVIVAL))) {
+            eliminated = true;
+            plugin.getServer().broadcast(Component.text(fullName + " is eliminated!").color(color));
+        }
     }
 
     public void spawnEmeralds() {
@@ -375,5 +383,9 @@ public class BPTeam extends BPTeamTemplate {
 
     public void addTrap(BPTrap trap) {
         traps.add(trap);
+    }
+
+    public boolean isEliminated() {
+        return eliminated;
     }
 }

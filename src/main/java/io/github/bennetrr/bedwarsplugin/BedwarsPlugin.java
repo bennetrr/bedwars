@@ -85,6 +85,8 @@ public class BedwarsPlugin extends JavaPlugin {
 
         // Register commands
         this.getCommand("start").setExecutor(new Commands(this));
+        this.getCommand("teaminfo").setExecutor(new Commands(this));
+        this.getCommand("bedwars").setExecutor(new Commands(this));
     }
 
     public void startGame(int maxPlayersPerTeam, int maxTeams) throws WrongCommandArgumentsException, NotEnoughPlayersException {
@@ -132,8 +134,13 @@ public class BedwarsPlugin extends JavaPlugin {
             teams.add(BPTeam.fromTemplate(template, players, map.getStartLoc(), mapPasteLoc));
         }
 
-        game = new BPGame(map, teams, new BPSpectatingTeam(spectatingTeamSpawnpoint, playerList));
+        game = new BPGame(map, teams, new BPSpectatingTeam(spectatingTeamSpawnpoint, playerList), this);
         getServer().broadcast(Component.text("Game started!"));
+    }
+
+    public void stopGame() {
+        getServer().broadcast(Component.text("Stopping the game..."));
+        reset();
     }
 
     public void reset() {

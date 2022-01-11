@@ -1,5 +1,6 @@
 package io.github.bennetrr.bedwarsplugin.game_elements;
 
+import io.github.bennetrr.bedwarsplugin.BedwarsPlugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Server;
@@ -13,11 +14,13 @@ public class BPGame {
     private final List<BPTeam> teams;
     private final BPSpectatingTeam spectatingTeam;
     private int runtimeTimer;
+    private final BedwarsPlugin plugin;
 
-    public BPGame(BPMap map, List<BPTeam> teams, BPSpectatingTeam spectatingTeam) {
+    public BPGame(BPMap map, List<BPTeam> teams, BPSpectatingTeam spectatingTeam, BedwarsPlugin plugin) {
         this.map = map;
         this.teams = teams;
         this.spectatingTeam = spectatingTeam;
+        this.plugin = plugin;
 
         runtimeTimer = 0;
     }
@@ -60,6 +63,13 @@ public class BPGame {
                 map.setEmeraldTimerMax(267);
                 server.broadcast(Component.text("The Emerald Spawners are now on level III"));
             }
+        }
+
+        // Winner detection
+        List<BPTeam> leftTeams = teams.stream().filter(BPTeam::isEliminated).toList();
+        if (leftTeams.size() == 1) {
+            plugin.getServer().broadcast(Component.text(leftTeams.get(0).getFullName() + " won this game!").color(leftTeams.get(0).getColor()));
+            plugin.stopGame();
         }
     }
 
