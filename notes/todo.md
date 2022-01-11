@@ -1,9 +1,9 @@
 # Features
 
-- [ ] Process upgrades and traps
+- [X] Process upgrades and traps
 - [ ] Displays for upgrades and traps
 - [ ] Winner determination
-- [ ] Death management
+- [X] Death management
 - [ ] Commands and config GUI
     - [ ] `/start` without arguments as alias for `/bedwars start`
     - [ ] `/bedwars stop`
@@ -15,7 +15,7 @@
 
 # Fixes
 
-- [ ] Test TNT-Jumping and Fireball-Jumping
+- [X] Test TNT-Jumping and Fireball-Jumping
 - [X] Add default sword and armor
 - [X] Cleanup at the end of a game and on enable
 - [X] Add onLogin-Event and teleport the players to spawn

@@ -3,6 +3,7 @@ package io.github.bennetrr.bedwarsplugin.game_elements;
 import io.github.bennetrr.bedwarsplugin.BedwarsPlugin;
 import io.github.bennetrr.bedwarsplugin.definitions.VillagerTrades;
 import io.github.bennetrr.bedwarsplugin.traps.BPTrap;
+import io.github.bennetrr.bedwarsplugin.utils.ItemUtils;
 import io.github.bennetrr.bedwarsplugin.utils.LocationRelativizer;
 import io.github.bennetrr.bedwarsplugin.utils.VillagerUtils;
 import net.kyori.adventure.key.Key;
@@ -41,7 +42,7 @@ public class BPTeam extends BPTeamTemplate {
     private BPTrap activeTrap;
     private int ironTimerMax;
     private int goldTimerMax;
-    private boolean eliminated;
+    private boolean bedDestroyed;
     private int ironTimer;
     private int goldTimer;
     private @Range(from = 0, to = 2) int strengthUpgrade;
@@ -65,7 +66,7 @@ public class BPTeam extends BPTeamTemplate {
         protectionUpgrade = 0;
         hasteUpgrade = 0;
         spawnerUpgrade = 0;
-        eliminated = false;
+        bedDestroyed = false;
         activeTrap = null;
 
         traps = new LinkedList<>();
@@ -209,29 +210,25 @@ public class BPTeam extends BPTeamTemplate {
             }
         }
 
-        Vector startVector = new Vector(startLoc.getX(), 0, startLoc.getZ());
-        Vector endVector = new Vector(endLoc.getX(), 0, endLoc.getZ());
+        Vector startVector = new Vector(r.c(startLoc).getX(), 0, r.c(startLoc).getZ());
+        Vector endVector = new Vector(r.c(endLoc).getX(), 0, r.c(endLoc).getZ());
 
         boolean playerInArea = false;
 
         // Traps
         for (Player player : plugin.getServer().getOnlinePlayers()) {
-            plugin.log("Traps", "Player: " + player.getName());
             // If player is in this team, continue with the next player
             if (players.contains(player)) continue;
-            plugin.log("Traps", "Player is not in this team");
-            // Check
-            // TODO: Use converted location (r.c())
+
+            // Check if the player is in the area of this team
             Vector playerVector = new Vector(player.getLocation().getX(), 0, player.getLocation().getZ());
             if (playerVector.isInAABB(startVector, endVector)) {
-                plugin.log("Traps", "Player is in teams area");
                 // If there is no active trap and if there are available traps
                 if (activeTrap == null && !traps.isEmpty()) {
-                    plugin.log("Traps", "Using a new Trap");
                     activeTrap = traps.remove();
                     players.forEach(teamPlayer -> {
                         teamPlayer.sendMessage(Component.text("Your trap got triggered!").color(NamedTextColor.DARK_RED));
-                        teamPlayer.playSound(Sound.sound(Key.key("minecraft:block.sculk_sensor.clicking_stop"), Sound.Source.MASTER, 0.5F, 1));
+                        teamPlayer.playSound(Sound.sound(Key.key("minecraft:block.sculk_sensor.clicking"), Sound.Source.MASTER, 0.5F, 1));
                     });
                 }
                 activeTrap.action(player);
@@ -239,8 +236,18 @@ public class BPTeam extends BPTeamTemplate {
             }
         }
         if (!playerInArea) {
-            plugin.log("Traps", "Stopped trap");
             activeTrap = null;
+        }
+
+        // Bed
+        if (!world.getBlockAt(bedLoc).getType().equals(ItemUtils.coloredBeds(color)) && !bedDestroyed){
+            bedDestroyed = true;
+            players.forEach(teamPlayer -> {
+                teamPlayer.sendMessage(Component.text("Your bed got destroyed!").color(NamedTextColor.DARK_RED));
+                teamPlayer.playSound(Sound.sound(Key.key("minecraft:entity.ender_dragon.breathe"), Sound.Source.MASTER, 0.5F, 1));
+            });
+            plugin.getServer().getOnlinePlayers().stream().filter(player -> !players.contains(player)).forEach(player ->
+                player.sendMessage(Component.text("The bed of " + fullName + "got destroyed!").color(color)));
         }
     }
 
@@ -306,12 +313,12 @@ public class BPTeam extends BPTeamTemplate {
         this.goldTimerMax = goldTimerMax;
     }
 
-    public boolean isEliminated() {
-        return eliminated;
+    public boolean isBedDestroyed() {
+        return bedDestroyed;
     }
 
-    public void setEliminated(boolean eliminated) {
-        this.eliminated = eliminated;
+    public void setBedDestroyed(boolean bedDestroyed) {
+        this.bedDestroyed = bedDestroyed;
     }
 
     public int getIronTimer() {
