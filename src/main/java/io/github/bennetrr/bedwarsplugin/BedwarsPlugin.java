@@ -85,8 +85,8 @@ public class BedwarsPlugin extends JavaPlugin {
 
         // Register commands
         this.getCommand("start").setExecutor(new Commands(this));
-        this.getCommand("teaminfo").setExecutor(new Commands(this));
-        this.getCommand("bedwars").setExecutor(new Commands(this));
+//        this.getCommand("teaminfo").setExecutor(new Commands(this));
+//        this.getCommand("bedwars").setExecutor(new Commands(this));
     }
 
     public void startGame(int maxPlayersPerTeam, int maxTeams) throws WrongCommandArgumentsException, NotEnoughPlayersException {

@@ -233,7 +233,7 @@ public class BPTeam extends BPTeamTemplate {
                         teamPlayer.playSound(Sound.sound(Key.key("minecraft:block.sculk_sensor.clicking"), Sound.Source.MASTER, 0.5F, 1));
                     });
                 }
-                activeTrap.action(player);
+                if (activeTrap != null) activeTrap.action(player);
                 playerInArea = true;
             }
         }
@@ -242,18 +242,14 @@ public class BPTeam extends BPTeamTemplate {
         }
 
         // Bed
-        if (!world.getBlockAt(bedLoc).getType().equals(ItemUtils.coloredBeds(color)) && !bedDestroyed){
+        if (!world.getBlockAt(bedLoc).getType().equals(ItemUtils.coloredBeds(color)) && !bedDestroyed) {
             bedDestroyed = true;
-            players.forEach(teamPlayer -> {
-                teamPlayer.sendMessage(Component.text("Your bed got destroyed!").color(NamedTextColor.DARK_RED));
-                teamPlayer.playSound(Sound.sound(Key.key("minecraft:entity.ender_dragon.breathe"), Sound.Source.MASTER, 0.5F, 1));
-            });
-            plugin.getServer().getOnlinePlayers().stream().filter(player -> !players.contains(player)).forEach(player ->
-                player.sendMessage(Component.text("The bed of " + fullName + "got destroyed!").color(color)));
+            players.forEach(teamPlayer -> teamPlayer.playSound(Sound.sound(Key.key("minecraft:entity.ender_dragon.breathe"), Sound.Source.MASTER, 0.5F, 1)));
+            plugin.getServer().broadcast(Component.text("The bed of " + fullName + " got destroyed!").color(color));
         }
 
         // Eliminated
-        if (players.stream().noneMatch(player -> player.getGameMode().equals(GameMode.SURVIVAL))) {
+        if (players.stream().noneMatch(player -> player.getGameMode().equals(GameMode.SURVIVAL)) && !eliminated) {
             eliminated = true;
             plugin.getServer().broadcast(Component.text(fullName + " is eliminated!").color(color));
         }

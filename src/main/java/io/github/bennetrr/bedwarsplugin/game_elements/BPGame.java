@@ -66,7 +66,7 @@ public class BPGame {
         }
 
         // Winner detection
-        List<BPTeam> leftTeams = teams.stream().filter(BPTeam::isEliminated).toList();
+        List<BPTeam> leftTeams = teams.stream().filter(team -> !team.isEliminated()).toList();
         if (leftTeams.size() == 1) {
             plugin.getServer().broadcast(Component.text(leftTeams.get(0).getFullName() + " won this game!").color(leftTeams.get(0).getColor()));
             plugin.stopGame();

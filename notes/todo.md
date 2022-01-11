@@ -1,9 +1,6 @@
 # Features
 
-- [X] Process upgrades and traps
 - [ ] Displays for upgrades and traps
-- [X] Winner determination
-- [X] Death management
 - [ ] Commands and config GUI
     - [ ] `/start` without arguments as alias for `/bedwars start`
     - [ ] `/bedwars stop`
@@ -15,10 +12,4 @@
 
 # Fixes
 
-- [X] Test TNT-Jumping and Fireball-Jumping
-- [X] Add default sword and armor
-- [X] Cleanup at the end of a game and on enable
-- [X] Add onLogin-Event and teleport the players to spawn
-- [X] Fix that the spawners spawn the items not in the middle of the block
-- [X] Add game area to forceload-chunks
-- [X] Build a barrier around the game area
+- [ ] Change the bed of gray to a light gray bed
