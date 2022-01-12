@@ -13,3 +13,5 @@
 # Fixes
 
 - [ ] Change the bed of gray to a light gray bed
+- [ ] Fix winner detection
+- [ ] Fix that the spawners spawn the items not in the middle of the block
