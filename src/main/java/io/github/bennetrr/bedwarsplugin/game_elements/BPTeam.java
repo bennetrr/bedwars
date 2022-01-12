@@ -242,7 +242,7 @@ public class BPTeam extends BPTeamTemplate {
         }
 
         // Bed
-        if (!world.getBlockAt(bedLoc).getType().equals(ItemUtils.coloredBeds(color)) && !bedDestroyed) {
+        if (!world.getBlockAt(r.c(bedLoc)).getType().equals(ItemUtils.coloredBeds(color)) && !bedDestroyed) {
             bedDestroyed = true;
             players.forEach(teamPlayer -> teamPlayer.playSound(Sound.sound(Key.key("minecraft:entity.ender_dragon.breathe"), Sound.Source.MASTER, 0.5F, 1)));
             plugin.getServer().broadcast(Component.text("The bed of " + fullName + " got destroyed!").color(color));
