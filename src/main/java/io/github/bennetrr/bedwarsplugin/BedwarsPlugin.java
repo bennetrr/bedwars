@@ -7,10 +7,7 @@ import io.github.bennetrr.bedwarsplugin.game_elements.*;
 import io.github.bennetrr.bedwarsplugin.handlers.*;
 import io.github.bennetrr.bedwarsplugin.utils.WorldEditStuff;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -81,11 +78,18 @@ public class BedwarsPlugin extends JavaPlugin {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 3, 1, false, false));
                 }
             }
+
+            w.getEntitiesByClass(Item.class).stream().filter(item -> item.getItemStack().getType().name().toLowerCase().contains("helmet") ||
+                item.getItemStack().getType().name().toLowerCase().contains("chestplate") ||
+                item.getItemStack().getType().name().toLowerCase().contains("legging") ||
+                item.getItemStack().getType().name().toLowerCase().contains("boots") ||
+                item.getItemStack().getType().name().toLowerCase().contains("bed") ||
+                item.getItemStack().getType().equals(Material.STONE_SWORD)).forEach(Entity::remove);
         }, 1L, 1L);
 
         // Register commands
         this.getCommand("start").setExecutor(new Commands(this));
-//        this.getCommand("teaminfo").setExecutor(new Commands(this));
+        this.getCommand("teaminfo").setExecutor(new Commands(this));
 //        this.getCommand("bedwars").setExecutor(new Commands(this));
     }
 

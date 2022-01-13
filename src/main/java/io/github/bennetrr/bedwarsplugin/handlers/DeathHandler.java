@@ -41,7 +41,7 @@ public class DeathHandler implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDeath(PlayerDeathEvent event) {
-        event.getDrops().removeIf(itemStack -> itemStack.getType().equals(Material.IRON_INGOT) || itemStack.getType().equals(Material.GOLD_INGOT) || itemStack.getType().equals(Material.DIAMOND) || itemStack.getType().equals(Material.EMERALD));
+        event.getDrops().removeIf(itemStack -> !itemStack.getType().equals(Material.IRON_INGOT) || !itemStack.getType().equals(Material.GOLD_INGOT) || !itemStack.getType().equals(Material.DIAMOND) || !itemStack.getType().equals(Material.EMERALD));
 
         Player player = event.getPlayer();
         if (plugin.isGameRunning()) {
