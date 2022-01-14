@@ -86,11 +86,6 @@ public class BedwarsPlugin extends JavaPlugin {
                 item.getItemStack().getType().name().toLowerCase().contains("bed") ||
                 item.getItemStack().getType().equals(Material.STONE_SWORD)).forEach(Entity::remove);
         }, 1L, 1L);
-
-        // Register commands
-        this.getCommand("start").setExecutor(new Commands(this));
-        this.getCommand("teaminfo").setExecutor(new Commands(this));
-//        this.getCommand("bedwars").setExecutor(new Commands(this));
     }
 
     public void startGame(int maxPlayersPerTeam, int maxTeams) throws WrongCommandArgumentsException, NotEnoughPlayersException {
