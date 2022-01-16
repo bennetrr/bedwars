@@ -74,17 +74,9 @@ public class BedwarsPlugin extends JavaPlugin {
             } else {
                 // During-game loop
                 game.tickActions(getServer());
-                for (Player player : getServer().getOnlinePlayers()) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 3, 1, false, false));
-                }
             }
 
-            w.getEntitiesByClass(Item.class).stream().filter(item -> item.getItemStack().getType().name().toLowerCase().contains("helmet") ||
-                item.getItemStack().getType().name().toLowerCase().contains("chestplate") ||
-                item.getItemStack().getType().name().toLowerCase().contains("legging") ||
-                item.getItemStack().getType().name().toLowerCase().contains("boots") ||
-                item.getItemStack().getType().name().toLowerCase().contains("bed") ||
-                item.getItemStack().getType().equals(Material.STONE_SWORD)).forEach(Entity::remove);
+            w.getEntitiesByClass(Item.class).stream().filter(item -> item.getItemStack().getType().name().toLowerCase().contains("helmet") || item.getItemStack().getType().name().toLowerCase().contains("chestplate") || item.getItemStack().getType().name().toLowerCase().contains("legging") || item.getItemStack().getType().name().toLowerCase().contains("boots") || item.getItemStack().getType().name().toLowerCase().contains("bed") || item.getItemStack().getType().equals(Material.STONE_SWORD)).forEach(Entity::remove);
         }, 1L, 1L);
     }
 
@@ -147,21 +139,23 @@ public class BedwarsPlugin extends JavaPlugin {
 
         // TP
         for (Player player : getServer().getOnlinePlayers()) {
-            player.teleport(spawnLoc);
-            player.getInventory().clear();
-            player.getEnderChest().clear();
-            player.setBedSpawnLocation(null);
+            resetPlayer(player);
+
             player.setGameMode(GameMode.ADVENTURE);
+            player.teleport(spawnLoc);
         }
-
-        getConfig().set("players", null);
-
         // Delete items and other entities
         w.getEntitiesByClass(Item.class).forEach(Entity::remove);
         w.getEntitiesByClass(Villager.class).forEach(Entity::remove);
 
         // Remove teams
         Bukkit.getScoreboardManager().getMainScoreboard().getTeams().forEach(Team::unregister);
+    }
+
+    public void resetPlayer(Player player) {
+        player.getInventory().clear();
+        player.getEnderChest().clear();
+        player.getActivePotionEffects().stream().map(PotionEffect::getType).forEach(player::removePotionEffect);
     }
 
     public boolean isGameRunning() {

@@ -49,11 +49,11 @@ public class TradeHandler implements Listener {
                 if (displayName == null) continue;
 
                 if (displayName.equalsIgnoreCase("permanent iron armor")) {
-                    String armorType = plugin.getConfig().getString("players." + player.getUniqueId() + ".armorType", "leather");
+                    String armorType = plugin.getGame().getArmorType(player);
                     if (armorType.equals("leather")) {
                         player.sendMessage(Component.text("You bought permanent iron armor"));
                         player.playSound(Sound.sound(Key.key("minecraft:entity.experience_orb.pickup"), Sound.Source.MASTER, 0.5F, 1));
-                        plugin.getConfig().set("players." + player.getUniqueId() + ".armorType", "iron");
+                        plugin.getGame().setArmorType(player, "iron");
                     } else {
                         player.sendMessage(Component.text("You already bought this or a better upgrade!").color(NamedTextColor.RED));
                         player.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 12));
@@ -68,11 +68,11 @@ public class TradeHandler implements Listener {
                 if (displayName == null) continue;
 
                 if (displayName.equalsIgnoreCase("permanent diamond armor")) {
-                    String armorType = plugin.getConfig().getString("players." + player.getUniqueId() + ".armorType", "leather");
+                    String armorType = plugin.getGame().getArmorType(player);
                     if (armorType.equals("leather") || armorType.equals("iron")) {
                         player.sendMessage(Component.text("You bought permanent diamond armor"));
                         player.playSound(Sound.sound(Key.key("minecraft:entity.experience_orb.pickup"), Sound.Source.MASTER, 0.5F, 1));
-                        plugin.getConfig().set("players." + player.getUniqueId() + ".armorType", "diamond");
+                        plugin.getGame().setArmorType(player, "diamond");
                     } else {
                         player.sendMessage(Component.text("You already bought this upgrade!").color(NamedTextColor.RED));
                         player.getInventory().addItem(new ItemStack(Material.EMERALD, 6));
@@ -308,7 +308,7 @@ public class TradeHandler implements Listener {
                 BPTeam team = plugin.getGame().getTeamForPlayer(player);
                 if (team == null) continue;
 
-                if (displayName.equalsIgnoreCase("it's a trap")) {
+                if (displayName.equals("It's a trap!")) {
                     for (int i = 0; i < itemStack.getAmount(); i++) {
                         team.addTrap(new ItsATrap());
                         team.getPlayers().forEach(p -> {

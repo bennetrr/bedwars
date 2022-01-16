@@ -7,11 +7,11 @@
     <groupId>io.github.bennetrr</groupId>
     <artifactId>BedwarsPlugin</artifactId>
     <version>0.0.1</version>
-    
+
     <build>
-         <finalName>${project.artifactId}</finalName>      
+        <finalName>${project.artifactId}</finalName>
     </build>
-         
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -62,17 +62,12 @@
         </dependency>
         <dependency>
             <groupId>cloud.commandframework</groupId>
-            <artifactId>cloud-core</artifactId>
+            <artifactId>cloud-paper</artifactId>
             <version>1.6.1</version>
         </dependency>
         <dependency>
             <groupId>cloud.commandframework</groupId>
             <artifactId>cloud-annotations</artifactId>
-            <version>1.6.1</version>
-        </dependency>
-        <dependency>
-            <groupId>cloud.commandframework</groupId>
-            <artifactId>cloud-paper</artifactId>
             <version>1.6.1</version>
         </dependency>
     </dependencies>

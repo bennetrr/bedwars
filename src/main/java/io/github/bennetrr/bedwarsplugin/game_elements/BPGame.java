@@ -7,14 +7,16 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
+import java.util.Hashtable;
 import java.util.List;
 
 public class BPGame {
     private final BPMap map;
     private final List<BPTeam> teams;
     private final BPSpectatingTeam spectatingTeam;
-    private int runtimeTimer;
     private final BedwarsPlugin plugin;
+    private final Hashtable<Player, String> armorTypes;
+    private int runtimeTimer;
 
     public BPGame(BPMap map, List<BPTeam> teams, BPSpectatingTeam spectatingTeam, BedwarsPlugin plugin) {
         this.map = map;
@@ -23,6 +25,7 @@ public class BPGame {
         this.plugin = plugin;
 
         runtimeTimer = 0;
+        armorTypes = new Hashtable<>();
     }
 
     public void tickActions(Server server) {
@@ -67,9 +70,6 @@ public class BPGame {
 
         // Winner detection
         List<BPTeam> leftTeams = teams.stream().filter(team -> !team.isEliminated()).toList();
-        for (BPTeam leftTeam : leftTeams) {
-            plugin.log("Winner detection", leftTeam.getName());
-        }
         if (leftTeams.size() == 1) {
             plugin.getServer().broadcast(Component.text(leftTeams.get(0).getFullName() + " won this game!").color(leftTeams.get(0).getColor()));
             plugin.stopGame();
@@ -95,5 +95,13 @@ public class BPGame {
 
     public int getRuntimeTimer() {
         return runtimeTimer;
+    }
+
+    public String getArmorType(Player player) {
+        return armorTypes.get(player);
+    }
+
+    public void setArmorType(Player player, String type) {
+        armorTypes.put(player, type);
     }
 }

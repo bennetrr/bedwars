@@ -21,14 +21,12 @@ public class LoginHandler implements Listener {
     public void onLogin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         player.sendMessage(Component.text("Bedwars v1.0.0 by bennetr and B3Crazy").color(NamedTextColor.DARK_GREEN));
+        plugin.resetPlayer(player);
+
         if (!plugin.isGameRunning()) {
             // If no game is running
             // Teleport the player to the spawn
             player.teleport(plugin.getSpawnLoc());
-
-            // Remove their spawnpoint
-            player.setBedSpawnLocation(null);
-
             // Set their game mode
             player.setGameMode(GameMode.ADVENTURE);
         } else {

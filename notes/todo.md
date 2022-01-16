@@ -13,9 +13,5 @@
 
 # Fixes
 
-- [ ] Change the bed of gray to a light gray bed
-- [ ] Look for the netherite sword on top of the nether island
-- [ ] Fix winner detection
+- [ ] Kill a player instantly if he gets void damage
 - [ ] Fix that the spawners spawn the items not in the middle of the block
-- [X] Delete items on death
-- [X] Delete bed, armor, ... items

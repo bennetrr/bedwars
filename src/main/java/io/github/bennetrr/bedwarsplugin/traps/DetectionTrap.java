@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class DetectionTrap extends BPTrap{
+public class DetectionTrap extends BPTrap {
     public DetectionTrap() {
         super("Detection Trap");
     }

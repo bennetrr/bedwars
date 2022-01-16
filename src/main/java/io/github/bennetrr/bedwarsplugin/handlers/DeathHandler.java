@@ -32,6 +32,7 @@ public class DeathHandler implements Listener {
 
             // If the teams bed is destroyed, set the player to spectator mode
             if (team.isBedDestroyed()) {
+                plugin.resetPlayer(player);
                 player.setGameMode(GameMode.SPECTATOR);
             }
         } else {

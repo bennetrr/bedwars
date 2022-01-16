@@ -100,20 +100,11 @@ public class BPTeam extends BPTeamTemplate {
             VillagerUtils.addTrades(villager, VillagerTrades.getUpgradeTraderTrades());
         });
 
-        // Game modes, TP, Inventories
+        // Player actions
         for (Player player : players) {
-            // Game modes
+            plugin.resetPlayer(player);
             player.setGameMode(GameMode.SURVIVAL);
-
-            // TP
             player.teleport(r.c(spawnpoint));
-
-            // Inventories
-            player.getInventory().clear();
-            player.getEnderChest().clear();
-
-            // Effects
-            player.getActivePotionEffects().stream().map(PotionEffect::getType).forEach(player::removePotionEffect);
         }
     }
 
@@ -138,8 +129,13 @@ public class BPTeam extends BPTeamTemplate {
 
         for (Player player : players) {
             // Reset armor
-            String armorType = plugin.getConfig().getString("players." + player.getUniqueId() + ".armorType", "leather");
+            String armorType = plugin.getGame().getArmorType(player);
             PlayerInventory inventory = player.getInventory();
+
+            if (armorType == null) {
+                armorType = "leather";
+                plugin.getGame().setArmorType(player, armorType);
+            }
 
             switch (armorType) {
                 case "leather" -> {
