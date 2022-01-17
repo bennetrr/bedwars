@@ -3,9 +3,8 @@
 - [ ] Displays for upgrades and traps
   - [ ] `/teaminfo` command
 - [ ] Commands and config GUI
-    - [ ] `/start` without arguments as alias for `/bedwars start`
-    - [ ] `/bedwars stop`
-    - [ ] `/bedwars config` for a config gui
+    - [X] `/start` without arguments as alias for `/bedwars start`
+    - [X] `/bedwars stop`
     - [ ] `/bedwars config ...` for configuration with the command line
 - [ ] New team assignment system
   - [ ] Set the player count for each team in the GUI or with the command

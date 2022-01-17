@@ -2,8 +2,10 @@ package io.github.bennetrr.bedwarsplugin;
 
 import cloud.commandframework.CommandTree;
 import cloud.commandframework.annotations.AnnotationParser;
+import cloud.commandframework.annotations.Argument;
 import cloud.commandframework.annotations.CommandDescription;
 import cloud.commandframework.annotations.CommandMethod;
+import cloud.commandframework.annotations.specifier.Range;
 import cloud.commandframework.arguments.parser.ParserParameters;
 import cloud.commandframework.arguments.parser.StandardParameters;
 import cloud.commandframework.bukkit.BukkitCommandManager;
@@ -15,6 +17,7 @@ import cloud.commandframework.paper.PaperCommandManager;
 import io.github.bennetrr.bedwarsplugin.definitions.Maps;
 import io.github.bennetrr.bedwarsplugin.game_elements.*;
 import io.github.bennetrr.bedwarsplugin.handlers.*;
+import io.github.bennetrr.bedwarsplugin.traps.BPTrap;
 import io.github.bennetrr.bedwarsplugin.utils.WorldEditStuff;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -34,6 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
+
+import static net.kyori.adventure.text.format.NamedTextColor.RED;
 
 
 public class BedwarsPlugin extends JavaPlugin {
@@ -128,14 +133,76 @@ public class BedwarsPlugin extends JavaPlugin {
         }, 1L, 1L);
     }
 
+    public void stopGame() {
+        getServer().broadcast(Component.text("Stopping the game..."));
+        reset();
+    }
+
+    public void reset() {
+        game = null;
+
+        for (Player player : getServer().getOnlinePlayers()) {
+            resetPlayer(player);
+
+            player.setGameMode(GameMode.ADVENTURE);
+            player.teleport(spawnLoc);
+        }
+
+        w.getEntitiesByClass(Item.class).forEach(Entity::remove);
+        w.getEntitiesByClass(Villager.class).forEach(Entity::remove);
+
+        Bukkit.getScoreboardManager().getMainScoreboard().getTeams().forEach(Team::unregister);
+    }
+
+    public void resetPlayer(Player player) {
+        player.getInventory().clear();
+        player.getEnderChest().clear();
+        player.getActivePotionEffects().stream().map(PotionEffect::getType).forEach(player::removePotionEffect);
+    }
+
+    @CommandMethod("teaminfo")
+    @CommandDescription("Show info about your team")
+    private void teamInfoCommand(CommandSender sender) {
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage(Component.text("You have to run this command as a player!").color(NamedTextColor.RED));
+            return;
+        }
+
+        if (isGameRunning()) {
+            sender.sendMessage(Component.text("You cannot run this command when no game is running!").color(NamedTextColor.RED));
+            return;
+        }
+
+        BPTeam team = getGame().getTeamForPlayer(player);
+        if (team == null) {
+            sender.sendMessage(Component.text("You have to be in a team to run this command!").color(NamedTextColor.RED));
+            return;
+        }
+
+        player.sendMessage(Component.text("=== Team Information ==="));
+        player.sendMessage(Component.text("Strength Upgrade: Level " + team.getStrengthUpgrade()));
+        player.sendMessage(Component.text("Regeneration Upgrade: Level " + (team.hasRegenUpgrade() ? "1" : "0")));
+        player.sendMessage(Component.text("Protection Upgrade: Level " + team.getProtectionUpgrade()));
+        player.sendMessage(Component.text("Haste Upgrade: Level " + team.getHasteUpgrade()));
+        player.sendMessage(Component.text("Spawner Upgrade: Level " + team.getSpawnerUpgrade()));
+        player.sendMessage(Component.text(""));
+        player.sendMessage(Component.text("Pending traps:"));
+        StringBuilder traps = new StringBuilder();
+        for (BPTrap trap : team.getTraps()) {
+            traps.append(trap.getName()).append(", ");
+        }
+        traps.deleteCharAt(traps.length() - 1);
+        traps.deleteCharAt(traps.length() - 1);
+        player.sendMessage(Component.text(traps.toString()));
+    }
+
     @CommandMethod("start")
     @CommandDescription("Start a new bedwars game")
     private void startCommand(@NonNull CommandSender sender) {
-        getServer().broadcast(Component.text("Starting a game!"));
-        // Reset and copy the map
-        reset();
-        WorldEditStuff.clearMap(mapPasteLoc);
-        map.copyMap();
+        if (isGameRunning()) {
+            sender.sendMessage(Component.text("You have to stop the running game before you can start a new!").color(RED));
+            return;
+        }
 
         // Get and check the values
         int maxPlayersTeam1 = getConfig().getInt("maxplayer.team1");
@@ -144,26 +211,30 @@ public class BedwarsPlugin extends JavaPlugin {
         int maxPlayersTeam4 = getConfig().getInt("maxplayer.team4");
 
         if (maxPlayersTeam1 < 1 || maxPlayersTeam1 > 6 || maxPlayersTeam2 < 0 || maxPlayersTeam2 > 6 || maxPlayersTeam3 < 0 || maxPlayersTeam3 > 6 || maxPlayersTeam4 < 0 || maxPlayersTeam4 > 6) {
-            getServer().broadcast(Component.text("Failed to start a game").color(NamedTextColor.RED));
-            sender.sendMessage(Component.text("The maximum number of players per team is not set or set incorrectly").color(NamedTextColor.RED));
-            sender.sendMessage(Component.text("Please use the /bedwars config command").color(NamedTextColor.RED));
+            sender.sendMessage(Component.text("The maximum number of players per team is not set or set incorrectly!").color(RED));
+            sender.sendMessage(Component.text("Please use the /bedwars config command").color(RED));
             return;
         }
 
         List<Player> playerList = new ArrayList<>(getServer().getOnlinePlayers());
         int playerCount = playerList.size();
         if (playerCount <= 0) {
-            getServer().broadcast(Component.text("Failed to start a game").color(NamedTextColor.RED));
-            sender.sendMessage(Component.text("There are no players online").color(NamedTextColor.RED));
+            sender.sendMessage(Component.text("There are no players online!").color(RED));
             return;
         }
 
         if ((maxPlayersTeam1 + maxPlayersTeam2 + maxPlayersTeam3 + maxPlayersTeam4) != playerCount) {
-            getServer().broadcast(Component.text("Failed to start a game").color(NamedTextColor.RED));
-            sender.sendMessage(Component.text("The maximum number of players per team is set incorrectly").color(NamedTextColor.RED));
-            sender.sendMessage(Component.text("Please use the /bedwars config command").color(NamedTextColor.RED));
+            sender.sendMessage(Component.text("The maximum number of players per team is set incorrectly!").color(RED));
+            sender.sendMessage(Component.text("Please use the /bedwars config command").color(RED));
             return;
         }
+
+        getServer().broadcast(Component.text("Starting a game!"));
+
+        // Reset and copy the map
+        reset();
+        WorldEditStuff.clearMap(mapPasteLoc);
+        map.copyMap();
 
         List<Integer> maxPlayersPerTeams = new ArrayList<>();
         maxPlayersPerTeams.add(maxPlayersTeam1);
@@ -188,34 +259,36 @@ public class BedwarsPlugin extends JavaPlugin {
         game = new BPGame(map, teams, new BPSpectatingTeam(spectatingTeamSpawnpoint, playerList), this);
     }
 
-    public void stopGame() {
-        getServer().broadcast(Component.text("Stopping the game..."));
-        reset();
+    @CommandMethod("bedwars start")
+    @CommandDescription("Start a new bedwars game")
+    private void bedwarsStartCommand(@NonNull CommandSender sender) {
+        startCommand(sender);
     }
 
-    public void reset() {
-        game = null;
-
-        // TP
-        for (Player player : getServer().getOnlinePlayers()) {
-            resetPlayer(player);
-
-            player.setGameMode(GameMode.ADVENTURE);
-            player.teleport(spawnLoc);
+    @CommandMethod("bedwars stop")
+    @CommandDescription("Stop the running bedwars game")
+    private void stopCommand(CommandSender sender) {
+        if (!isGameRunning()) {
+            sender.sendMessage(Component.text("No game is running!").color(RED));
+            return;
         }
-        // Delete items and other entities
-        w.getEntitiesByClass(Item.class).forEach(Entity::remove);
-        w.getEntitiesByClass(Villager.class).forEach(Entity::remove);
-
-        // Remove teams
-        Bukkit.getScoreboardManager().getMainScoreboard().getTeams().forEach(Team::unregister);
+        stopGame();
     }
 
-    public void resetPlayer(Player player) {
-        player.getInventory().clear();
-        player.getEnderChest().clear();
-        player.getActivePotionEffects().stream().map(PotionEffect::getType).forEach(player::removePotionEffect);
+    @CommandMethod("bedwars config maxPlayersPerTeams <team1> <team2> <team3> <team4>")
+    @CommandDescription("Configure how many players should be in each team")
+    private void maxPlayersPerTeamsConfigCommand(CommandSender sender,
+                                                 @Argument("team1") @Range(min = "0", max = "6") int team1,
+                                                 @Argument("team2") @Range(min = "0", max = "6") int team2,
+                                                 @Argument("team3") @Range(min = "0", max = "6") int team3,
+                                                 @Argument("team4") @Range(min = "0", max = "6") int team4) {
+        getConfig().set("maxplayer.team1", team1);
+        getConfig().set("maxplayer.team2", team2);
+        getConfig().set("maxplayer.team3", team3);
+        getConfig().set("maxplayer.team4", team4);
+        saveConfig();
     }
+
 
     public boolean isGameRunning() {
         return game != null;
