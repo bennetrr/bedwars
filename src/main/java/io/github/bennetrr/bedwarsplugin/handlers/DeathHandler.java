@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
@@ -53,5 +54,11 @@ public class DeathHandler implements Listener {
             // If the teams bed is destroyed, set the player to spectator mode
             if (team.isBedDestroyed()) event.deathMessage(event.deathMessage().append(Component.text(" (Final Kill)")));
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onVoidDamage(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player player)) return;
+        if (event.getCause().equals(EntityDamageEvent.DamageCause.VOID)) player.setHealth(0);
     }
 }

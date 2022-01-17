@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="Raspi4" remoteFilesAllowedToDisappearOnAutoupload="false" autoUploadExternalChanges="true">
+  <component name="PublishConfigData" serverName="Pi4" remoteFilesAllowedToDisappearOnAutoupload="false" autoUploadExternalChanges="true">
     <serverData>
-      <paths name="Raspi4">
+      <paths name="Pi4">
         <serverdata>
           <mappings>
-            <mapping deploy="/plugins" local="$PROJECT_DIR$/target" web="/plugins" />
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
-          <excludedPaths>
-            <excludedPath local="true" path="$PROJECT_DIR$/target/classes" />
-            <excludedPath local="true" path="$PROJECT_DIR$/target/generated-sources" />
-            <excludedPath local="true" path="$PROJECT_DIR$/target/maven-archiver" />
-            <excludedPath local="true" path="$PROJECT_DIR$/target/maven-status" />
-          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>
-    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>

@@ -63,7 +63,7 @@ public class BedwarsPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         // Commands
-        final Function<CommandTree<CommandSender>, CommandExecutionCoordinator<CommandSender>> executionCoordinatorFunction = AsynchronousCommandExecutionCoordinator.<CommandSender>newBuilder().build();
+        final Function<CommandTree<CommandSender>, CommandExecutionCoordinator<CommandSender>> executionCoordinatorFunction = CommandExecutionCoordinator.simpleCoordinator();
 
         // Get the command manager
         try {

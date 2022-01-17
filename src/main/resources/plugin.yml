@@ -4,9 +4,3 @@ main: io.github.bennetrr.bedwarsplugin.BedwarsPlugin
 api-version: 1.17
 depend:
   - FastAsyncWorldEdit
-commands:
-  start:
-    description: Start a new game
-    usage: /start
-    permission: bedwars.start
-    permission-message: You don't have <permission>
