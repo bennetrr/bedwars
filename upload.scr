@@ -1,4 +1,0 @@
-cd /home/pi/mcservers/bedwars/plugins/
-del BedwarsPlugin.jar
-put D:\Minecraft\bedwars\BedwarsPlugin\target\BedwarsPlugin.jar
-quit
