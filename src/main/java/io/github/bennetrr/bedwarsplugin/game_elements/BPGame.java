@@ -17,12 +17,14 @@ public class BPGame {
     private final BedwarsPlugin plugin;
     private final Hashtable<Player, String> armorTypes;
     private int runtimeTimer;
+    private final boolean practiseMode;
 
-    public BPGame(BPMap map, List<BPTeam> teams, BPSpectatingTeam spectatingTeam, BedwarsPlugin plugin) {
+    public BPGame(BPMap map, List<BPTeam> teams, BPSpectatingTeam spectatingTeam, BedwarsPlugin plugin, boolean practiseMode) {
         this.map = map;
         this.teams = teams;
         this.spectatingTeam = spectatingTeam;
         this.plugin = plugin;
+        this.practiseMode = practiseMode;
 
         runtimeTimer = 0;
         armorTypes = new Hashtable<>();
@@ -69,10 +71,12 @@ public class BPGame {
         }
 
         // Winner detection
-        List<BPTeam> leftTeams = teams.stream().filter(team -> !team.isEliminated()).toList();
-        if (leftTeams.size() == 1) {
-            plugin.getServer().broadcast(Component.text(leftTeams.get(0).getFullName() + " won this game!").color(leftTeams.get(0).getColor()));
-            plugin.stopGame();
+        if (!practiseMode) {
+            List<BPTeam> leftTeams = teams.stream().filter(team -> !team.isEliminated()).toList();
+            if (leftTeams.size() == 1) {
+                plugin.getServer().broadcast(Component.text(leftTeams.get(0).getFullName() + " won this game!").color(leftTeams.get(0).getColor()));
+                plugin.stopGame();
+            }
         }
     }
 
@@ -103,5 +107,9 @@ public class BPGame {
 
     public void setArmorType(Player player, String type) {
         armorTypes.put(player, type);
+    }
+
+    public boolean isPractiseMode() {
+        return practiseMode;
     }
 }

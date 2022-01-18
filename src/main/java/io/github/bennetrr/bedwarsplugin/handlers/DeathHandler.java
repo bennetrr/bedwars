@@ -32,7 +32,7 @@ public class DeathHandler implements Listener {
             event.setRespawnLocation(team.getSpawnLoc());
 
             // If the teams bed is destroyed, set the player to spectator mode
-            if (team.isBedDestroyed()) {
+            if (team.isBedDestroyed() && !plugin.getGame().isPractiseMode()) {
                 plugin.resetPlayer(player);
                 player.setGameMode(GameMode.SPECTATOR);
             }

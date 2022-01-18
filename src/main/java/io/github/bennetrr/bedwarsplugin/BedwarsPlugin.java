@@ -10,7 +10,6 @@ import cloud.commandframework.arguments.parser.ParserParameters;
 import cloud.commandframework.arguments.parser.StandardParameters;
 import cloud.commandframework.bukkit.BukkitCommandManager;
 import cloud.commandframework.bukkit.CloudBukkitCapabilities;
-import cloud.commandframework.execution.AsynchronousCommandExecutionCoordinator;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.paper.PaperCommandManager;
@@ -168,7 +167,7 @@ public class BedwarsPlugin extends JavaPlugin {
             return;
         }
 
-        if (isGameRunning()) {
+        if (!isGameRunning()) {
             sender.sendMessage(Component.text("You cannot run this command when no game is running!").color(NamedTextColor.RED));
             return;
         }
@@ -188,11 +187,14 @@ public class BedwarsPlugin extends JavaPlugin {
         player.sendMessage(Component.text(""));
         player.sendMessage(Component.text("Pending traps:"));
         StringBuilder traps = new StringBuilder();
-        for (BPTrap trap : team.getTraps()) {
-            traps.append(trap.getName()).append(", ");
+        if (team.getTraps().isEmpty()) traps.append("No traps");
+        else {
+            for (BPTrap trap : team.getTraps()) {
+                traps.append(trap.getName()).append(", ");
+            }
+            traps.deleteCharAt(traps.length() - 1);
+            traps.deleteCharAt(traps.length() - 1);
         }
-        traps.deleteCharAt(traps.length() - 1);
-        traps.deleteCharAt(traps.length() - 1);
         player.sendMessage(Component.text(traps.toString()));
     }
 
@@ -256,7 +258,10 @@ public class BedwarsPlugin extends JavaPlugin {
             teams.add(BPTeam.fromTemplate(template, players, map.getStartLoc(), mapPasteLoc));
         }
 
-        game = new BPGame(map, teams, new BPSpectatingTeam(spectatingTeamSpawnpoint, playerList), this);
+        game = new BPGame(map, teams, new BPSpectatingTeam(spectatingTeamSpawnpoint, playerList), this, (maxPlayersPerTeams.size() == 1));
+        if (maxPlayersPerTeams.size() == 1) {
+            getServer().broadcast(Component.text("The plugin detected that there is only one team and activated the practice mode. You can stop the game with /bedwars stop"));
+        }
     }
 
     @CommandMethod("bedwars start")
@@ -277,11 +282,7 @@ public class BedwarsPlugin extends JavaPlugin {
 
     @CommandMethod("bedwars config maxPlayersPerTeams <team1> <team2> <team3> <team4>")
     @CommandDescription("Configure how many players should be in each team")
-    private void maxPlayersPerTeamsConfigCommand(CommandSender sender,
-                                                 @Argument("team1") @Range(min = "0", max = "6") int team1,
-                                                 @Argument("team2") @Range(min = "0", max = "6") int team2,
-                                                 @Argument("team3") @Range(min = "0", max = "6") int team3,
-                                                 @Argument("team4") @Range(min = "0", max = "6") int team4) {
+    private void maxPlayersPerTeamsConfigCommand(CommandSender sender, @Argument("team1") @Range(min = "0", max = "6") int team1, @Argument("team2") @Range(min = "0", max = "6") int team2, @Argument("team3") @Range(min = "0", max = "6") int team3, @Argument("team4") @Range(min = "0", max = "6") int team4) {
         getConfig().set("maxplayer.team1", team1);
         getConfig().set("maxplayer.team2", team2);
         getConfig().set("maxplayer.team3", team3);

@@ -127,7 +127,7 @@ public class BPTeam extends BPTeamTemplate {
             world.spawn(r.c(spawnerLoc, .5, .5), Item.class, item -> item.setItemStack(new ItemStack(Material.GOLD_INGOT, 1)));
         }
 
-        for (Player player : players) {
+        for (Player player : players.stream().filter(player -> player.getGameMode().equals(GameMode.SURVIVAL)).toList()) {
             // Reset armor
             String armorType = plugin.getGame().getArmorType(player);
             PlayerInventory inventory = player.getInventory();
@@ -214,7 +214,7 @@ public class BPTeam extends BPTeamTemplate {
         boolean playerInArea = false;
 
         // Traps
-        for (Player player : plugin.getServer().getOnlinePlayers()) {
+        for (Player player : plugin.getServer().getOnlinePlayers().stream().filter(player -> player.getGameMode().equals(GameMode.SURVIVAL)).toList()) {
             // If player is in this team, continue with the next player
             if (players.contains(player)) continue;
 

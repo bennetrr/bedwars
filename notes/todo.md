@@ -1,2 +1,0 @@
-- [ ] Add a practise mode so the game will not instantly end when starting with one team
-- [ ] Fix that the spawners spawn the items not in the middle of the block

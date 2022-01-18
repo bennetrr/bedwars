@@ -122,6 +122,7 @@ public class VillagerTrades {
             itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.EMERALD, 1), sellItem});
         }
         // Section Miscellaneous
+        itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 3), new ItemStack(Material.COOKED_BEEF, 5)});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.GOLD_INGOT, 3), new ItemStack(Material.GOLDEN_APPLE, 1)});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.IRON_INGOT, 20), new ItemStack(Material.WATER_BUCKET, 1)});
         itemTraderTrades.add(new ItemStack[]{new ItemStack(Material.GOLD_INGOT, 10), new ItemStack(Material.LAVA_BUCKET, 1)});
