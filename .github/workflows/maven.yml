@@ -1,4 +1,4 @@
-name: Build plugin jar
+name: Build plugin JAR
 
 on:
   release:
