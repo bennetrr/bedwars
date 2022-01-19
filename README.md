@@ -13,3 +13,10 @@ We will give better instructions later, but for now here are the things you need
 - [FastAsyncWorldEdit for 1.17.1](https://ci.athion.net/job/FastAsyncWorldEdit-1.17/426/artifact/artifacts/FastAsyncWorldEdit-Bukkit-1.17-426.jar)
 - [OldCombatMechanics](https://www.spigotmc.org/resources/oldcombatmechanics-disable-1-9-hit-cooldown.19510/)
 - The plugin and the map from our [releases page](https://github.com/bennetrr/bedwars/releases)
+
+## Planned features
+- Better Readme and installation instructions
+- Docker Container for easy install
+- Support for multiple maps
+- Better team assignment system
+- Addon API for adding items etc. with an own plugin
