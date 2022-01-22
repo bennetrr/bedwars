@@ -14,6 +14,13 @@ We will give better instructions later, but for now here are the things you need
 - [OldCombatMechanics](https://www.spigotmc.org/resources/oldcombatmechanics-disable-1-9-hit-cooldown.19510/)
 - The plugin and the map from our [releases page](https://github.com/bennetrr/bedwars/releases)
 
+## Usage
+This plugin brings a few commands:
+- `/start` or `/bedwars start`: Start a new game
+- `/bedwars stop`: Stop the running game
+- `/bedwars config maxPlayersPerTeams <team1> <team2> <team3> <team4>`: Set how many players are in each team
+- `/teaminfo`: Show information about your team such as upgrades and active traps
+
 ## Planned features
 - Better Readme and installation instructions
 - Docker Container for easy install
