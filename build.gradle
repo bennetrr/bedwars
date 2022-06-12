@@ -35,7 +35,7 @@ dependencies {
 group = 'io.github.bennetrr'
 version = '1.0.0'
 description = 'BedwarsPlugin'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 publishing {
     publications {
